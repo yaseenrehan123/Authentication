@@ -102,10 +102,13 @@ async function main() {
                     error: 'Password not matched'
                 })
             };
-            const accessToken = jwt.sign({ id: user.id, email: user.email }, process.env.ACCESS_TOKEN_SECRET!)
+            const accessToken = generateAccessToken(user);
+            const refreshToken = jwt.sign({ id: user.id, email: user.email }, process.env.REFRESH_TOKEN_SECRET!);
+
             return res.status(200).json({
                 success: true,
-                accessToken: accessToken
+                accessToken: accessToken,
+                refreshToken: refreshToken
             });
         }
         catch (err) {
@@ -118,10 +121,37 @@ async function main() {
 
     });
 
-    app.get('/me', authenticateToken, (req, res) => {
+    app.post('/refresh', (req, res) => {
+        const refreshToken = req.body.refreshToken;
+        if (!refreshToken) {
+            res.status(401).json({
+                success: false,
+                error: "No refresh token"
+            })
+        };
+
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!,
+            (err: jwt.VerifyErrors | null, decoded: string | jwt.JwtPayload | undefined) => {
+                if (err || !decoded || typeof decoded === "string") {
+                    return res.status(403).json({
+                        success: false,
+                        error: "Token no longer valid"
+                    });
+                }
+                const user = (decoded as any);
+                const newAccessToken = generateAccessToken(user);
+                return res.json({
+                    success: true,
+                    accessToken: newAccessToken
+                });
+            })
+
+    });
+
+    app.get('/me', authenticateToken, async (req, res) => {
         const decoded = (req as any).user;
 
-        const user = prisma.user.findUnique({
+        const user = await prisma.user.findUnique({
             where: { id: decoded.id },
             select: {
                 id: true,
@@ -165,5 +195,18 @@ async function main() {
             (req as any).user = user;
             next();
         })
+    }
+
+    function generateAccessToken(user: {
+        id: string;
+        email: string;
+        username: string;
+        password: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }) {
+        return jwt.sign({ id: user.id, email: user.email }, process.env.ACCESS_TOKEN_SECRET!, {
+            expiresIn: "30s"
+        });
     }
 }

@@ -125,8 +125,16 @@ exports.Prisma.UserScalarFieldEnum = {
   username: 'username',
   email: 'email',
   password: 'password',
+  verified: 'verified',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.VerificationCodeScalarFieldEnum = {
+  id: 'id',
+  verificationCode: 'verificationCode',
+  createdAt: 'createdAt',
+  unverifiedUserId: 'unverifiedUserId'
 };
 
 exports.Prisma.SortOrder = {
@@ -139,9 +147,15 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  VerificationCode: 'VerificationCode'
 };
 
 /**

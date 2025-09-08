@@ -15,10 +15,20 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  username  String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id               String            @id @default(uuid())
+  username         String
+  email            String            @unique
+  password         String
+  verified         Boolean           @default(false)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  verificationCode VerificationCode?
+}
+
+model VerificationCode {
+  id               String   @id @default(uuid())
+  verificationCode Int
+  createdAt        DateTime @default(now())
+  unverifiedUser   User?    @relation(fields: [unverifiedUserId], references: [id])
+  unverifiedUserId String?  @unique
 }

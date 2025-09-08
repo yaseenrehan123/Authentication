@@ -3,11 +3,14 @@ import cors from "cors";
 import bycrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import crypto from "crypto";
 import { PrismaClient } from "../generated/prisma/client.js";
 import { signupSchema, loginSchema } from "./validations.js";
+import { initNodemailer, sendMail } from "./nodemailer.js";
 const app = express();
 const PORT = 8081;
 const prisma = new PrismaClient();
+initNodemailer();
 
 main()
     .catch((e: Error) => {
@@ -53,10 +56,33 @@ async function main() {
                 data: {
                     username: data.username,
                     email: data.email,
-                    password: hashedPassword
+                    password: hashedPassword,
+                    verified: false
                 }
             });
 
+            const verificationCode = crypto.randomInt(100000, 999999);
+            const newVerificationCode = await prisma.verificationCode.create({
+                data: {
+                    verificationCode: verificationCode
+                }
+            });
+            await sendMail({
+                subject: 'Verify your email address',
+                email: process.env.MY_GOOGLE_EMAIL!,
+                message: `
+                <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px;">
+                <h2 style="color: #333;">Verify your email address</h2>
+                <p>Thanks for signing up, <b>${newUser.username}</b>!</p>
+                <p>Please verify your email by copying the code below:</p>
+                <div style="font-size: 24px; font-weight: bold; margin: 20px 0; color: #4CAF50;">
+                    ${verificationCode}
+                </div>
+                <p>This code expires in <b>30 minutes</b>.</p>
+                </div>
+            `,
+                address: newUser.email
+            });
             console.log(newUser);
 
             return res.status(200).json({
@@ -70,7 +96,6 @@ async function main() {
                 error: "Internal server error"
             });
         }
-
 
     });
 
@@ -94,7 +119,12 @@ async function main() {
                     error: 'User not found'
                 });
             };
-
+            if (!user.verified) {
+                return res.status(400).json({
+                    success: false,
+                    error: "Account not verified"
+                });
+            }
             const verified = await bycrypt.compare(data.password, user?.password!);
             if (!verified) {
                 return res.status(400).json({

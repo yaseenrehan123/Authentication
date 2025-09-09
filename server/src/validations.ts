@@ -11,3 +11,8 @@ export const loginSchema = z.object({
     email: z.email(),
     password: z.string()
 });
+
+export const verificationSchema = z.object({
+    email: z.email(),
+    verificationCode: z.string().length(6)
+});

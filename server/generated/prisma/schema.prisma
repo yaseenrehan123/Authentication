@@ -27,7 +27,7 @@ model User {
 
 model VerificationCode {
   id               String   @id @default(uuid())
-  verificationCode Int
+  verificationCode String
   createdAt        DateTime @default(now())
   unverifiedUser   User?    @relation(fields: [unverifiedUserId], references: [id])
   unverifiedUserId String?  @unique

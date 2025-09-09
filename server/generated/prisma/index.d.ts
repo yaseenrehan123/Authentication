@@ -2042,30 +2042,20 @@ export namespace Prisma {
 
   export type AggregateVerificationCode = {
     _count: VerificationCodeCountAggregateOutputType | null
-    _avg: VerificationCodeAvgAggregateOutputType | null
-    _sum: VerificationCodeSumAggregateOutputType | null
     _min: VerificationCodeMinAggregateOutputType | null
     _max: VerificationCodeMaxAggregateOutputType | null
   }
 
-  export type VerificationCodeAvgAggregateOutputType = {
-    verificationCode: number | null
-  }
-
-  export type VerificationCodeSumAggregateOutputType = {
-    verificationCode: number | null
-  }
-
   export type VerificationCodeMinAggregateOutputType = {
     id: string | null
-    verificationCode: number | null
+    verificationCode: string | null
     createdAt: Date | null
     unverifiedUserId: string | null
   }
 
   export type VerificationCodeMaxAggregateOutputType = {
     id: string | null
-    verificationCode: number | null
+    verificationCode: string | null
     createdAt: Date | null
     unverifiedUserId: string | null
   }
@@ -2078,14 +2068,6 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type VerificationCodeAvgAggregateInputType = {
-    verificationCode?: true
-  }
-
-  export type VerificationCodeSumAggregateInputType = {
-    verificationCode?: true
-  }
 
   export type VerificationCodeMinAggregateInputType = {
     id?: true
@@ -2147,18 +2129,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: VerificationCodeAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: VerificationCodeSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: VerificationCodeMinAggregateInputType
@@ -2189,20 +2159,16 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: VerificationCodeCountAggregateInputType | true
-    _avg?: VerificationCodeAvgAggregateInputType
-    _sum?: VerificationCodeSumAggregateInputType
     _min?: VerificationCodeMinAggregateInputType
     _max?: VerificationCodeMaxAggregateInputType
   }
 
   export type VerificationCodeGroupByOutputType = {
     id: string
-    verificationCode: number
+    verificationCode: string
     createdAt: Date
     unverifiedUserId: string | null
     _count: VerificationCodeCountAggregateOutputType | null
-    _avg: VerificationCodeAvgAggregateOutputType | null
-    _sum: VerificationCodeSumAggregateOutputType | null
     _min: VerificationCodeMinAggregateOutputType | null
     _max: VerificationCodeMaxAggregateOutputType | null
   }
@@ -2270,7 +2236,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      verificationCode: number
+      verificationCode: string
       createdAt: Date
       unverifiedUserId: string | null
     }, ExtArgs["result"]["verificationCode"]>
@@ -2698,7 +2664,7 @@ export namespace Prisma {
    */
   interface VerificationCodeFieldRefs {
     readonly id: FieldRef<"VerificationCode", 'String'>
-    readonly verificationCode: FieldRef<"VerificationCode", 'Int'>
+    readonly verificationCode: FieldRef<"VerificationCode", 'String'>
     readonly createdAt: FieldRef<"VerificationCode", 'DateTime'>
     readonly unverifiedUserId: FieldRef<"VerificationCode", 'String'>
   }
@@ -3247,20 +3213,6 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
-
-
-  /**
-   * Reference to a field of type 'Float'
-   */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float[]'
-   */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
   /**
    * Deep Input Types
    */
@@ -3336,7 +3288,7 @@ export namespace Prisma {
     OR?: VerificationCodeWhereInput[]
     NOT?: VerificationCodeWhereInput | VerificationCodeWhereInput[]
     id?: StringFilter<"VerificationCode"> | string
-    verificationCode?: IntFilter<"VerificationCode"> | number
+    verificationCode?: StringFilter<"VerificationCode"> | string
     createdAt?: DateTimeFilter<"VerificationCode"> | Date | string
     unverifiedUserId?: StringNullableFilter<"VerificationCode"> | string | null
     unverifiedUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
@@ -3356,7 +3308,7 @@ export namespace Prisma {
     AND?: VerificationCodeWhereInput | VerificationCodeWhereInput[]
     OR?: VerificationCodeWhereInput[]
     NOT?: VerificationCodeWhereInput | VerificationCodeWhereInput[]
-    verificationCode?: IntFilter<"VerificationCode"> | number
+    verificationCode?: StringFilter<"VerificationCode"> | string
     createdAt?: DateTimeFilter<"VerificationCode"> | Date | string
     unverifiedUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id" | "unverifiedUserId">
@@ -3367,10 +3319,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     unverifiedUserId?: SortOrderInput | SortOrder
     _count?: VerificationCodeCountOrderByAggregateInput
-    _avg?: VerificationCodeAvgOrderByAggregateInput
     _max?: VerificationCodeMaxOrderByAggregateInput
     _min?: VerificationCodeMinOrderByAggregateInput
-    _sum?: VerificationCodeSumOrderByAggregateInput
   }
 
   export type VerificationCodeScalarWhereWithAggregatesInput = {
@@ -3378,7 +3328,7 @@ export namespace Prisma {
     OR?: VerificationCodeScalarWhereWithAggregatesInput[]
     NOT?: VerificationCodeScalarWhereWithAggregatesInput | VerificationCodeScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"VerificationCode"> | string
-    verificationCode?: IntWithAggregatesFilter<"VerificationCode"> | number
+    verificationCode?: StringWithAggregatesFilter<"VerificationCode"> | string
     createdAt?: DateTimeWithAggregatesFilter<"VerificationCode"> | Date | string
     unverifiedUserId?: StringNullableWithAggregatesFilter<"VerificationCode"> | string | null
   }
@@ -3459,48 +3409,48 @@ export namespace Prisma {
 
   export type VerificationCodeCreateInput = {
     id?: string
-    verificationCode: number
+    verificationCode: string
     createdAt?: Date | string
     unverifiedUser?: UserCreateNestedOneWithoutVerificationCodeInput
   }
 
   export type VerificationCodeUncheckedCreateInput = {
     id?: string
-    verificationCode: number
+    verificationCode: string
     createdAt?: Date | string
     unverifiedUserId?: string | null
   }
 
   export type VerificationCodeUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    verificationCode?: IntFieldUpdateOperationsInput | number
+    verificationCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     unverifiedUser?: UserUpdateOneWithoutVerificationCodeNestedInput
   }
 
   export type VerificationCodeUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    verificationCode?: IntFieldUpdateOperationsInput | number
+    verificationCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     unverifiedUserId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type VerificationCodeCreateManyInput = {
     id?: string
-    verificationCode: number
+    verificationCode: string
     createdAt?: Date | string
     unverifiedUserId?: string | null
   }
 
   export type VerificationCodeUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    verificationCode?: IntFieldUpdateOperationsInput | number
+    verificationCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type VerificationCodeUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    verificationCode?: IntFieldUpdateOperationsInput | number
+    verificationCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     unverifiedUserId?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -3611,17 +3561,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -3654,10 +3593,6 @@ export namespace Prisma {
     unverifiedUserId?: SortOrder
   }
 
-  export type VerificationCodeAvgOrderByAggregateInput = {
-    verificationCode?: SortOrder
-  }
-
   export type VerificationCodeMaxOrderByAggregateInput = {
     id?: SortOrder
     verificationCode?: SortOrder
@@ -3670,26 +3605,6 @@ export namespace Prisma {
     verificationCode?: SortOrder
     createdAt?: SortOrder
     unverifiedUserId?: SortOrder
-  }
-
-  export type VerificationCodeSumOrderByAggregateInput = {
-    verificationCode?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -3758,14 +3673,6 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutVerificationCodeInput, UserUncheckedCreateWithoutVerificationCodeInput>
     connectOrCreate?: UserCreateOrConnectWithoutVerificationCodeInput
     connect?: UserWhereUniqueInput
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type UserUpdateOneWithoutVerificationCodeNestedInput = {
@@ -3876,33 +3783,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -3933,13 +3813,13 @@ export namespace Prisma {
 
   export type VerificationCodeCreateWithoutUnverifiedUserInput = {
     id?: string
-    verificationCode: number
+    verificationCode: string
     createdAt?: Date | string
   }
 
   export type VerificationCodeUncheckedCreateWithoutUnverifiedUserInput = {
     id?: string
-    verificationCode: number
+    verificationCode: string
     createdAt?: Date | string
   }
 
@@ -3961,13 +3841,13 @@ export namespace Prisma {
 
   export type VerificationCodeUpdateWithoutUnverifiedUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    verificationCode?: IntFieldUpdateOperationsInput | number
+    verificationCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type VerificationCodeUncheckedUpdateWithoutUnverifiedUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    verificationCode?: IntFieldUpdateOperationsInput | number
+    verificationCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

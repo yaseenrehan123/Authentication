@@ -28,7 +28,7 @@ export async function sendMail({ subject, email, message, address }: {
             subject,
             from: process.env.GOOGLE_EMAIL,
             replyTo: email,
-            text: message,
+            html: message,
             to: address
 
         });

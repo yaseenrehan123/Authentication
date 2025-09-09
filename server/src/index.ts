@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import crypto from "crypto";
 import { PrismaClient } from "../generated/prisma/client.js";
-import { signupSchema, loginSchema } from "./validations.js";
+import { signupSchema, loginSchema, verificationSchema } from "./validations.js";
 import { initNodemailer, sendMail } from "./nodemailer.js";
 const app = express();
 const PORT = 8081;
@@ -52,21 +52,23 @@ async function main() {
                 })
             };
             const hashedPassword = await bycrypt.hash(data.password, 10);
+            const verificationCode = crypto.randomInt(100000, 999999);
+            const hashedVerificationCode = await bycrypt.hash(verificationCode.toString(), 10);
+
             const newUser = await prisma.user.create({
                 data: {
                     username: data.username,
                     email: data.email,
                     password: hashedPassword,
-                    verified: false
+                    verified: false,
+                    verificationCode: {
+                        create: {
+                            verificationCode: hashedVerificationCode
+                        }
+                    }
                 }
             });
 
-            const verificationCode = crypto.randomInt(100000, 999999);
-            const newVerificationCode = await prisma.verificationCode.create({
-                data: {
-                    verificationCode: verificationCode
-                }
-            });
             await sendMail({
                 subject: 'Verify your email address',
                 email: process.env.MY_GOOGLE_EMAIL!,
@@ -206,6 +208,65 @@ async function main() {
 
     });
 
+    app.post('/verify', async (req, res) => {
+        try {
+            const result = verificationSchema.safeParse(req.body);
+            if (!result.success) {
+                return res.status(400).json({
+                    success: false,
+                    error: result.error.message
+                });
+            };
+            const data = result.data!;
+            const user = await prisma.user.findUnique({
+                where: { email: data.email },
+                include: {
+                    verificationCode: true
+                }
+            });
+
+            if (!user || !user.verificationCode) {
+                return res.status(400).json({ success: false, error: "Invalid verification request" });
+            }
+
+            const expiresAt = new Date(user.verificationCode.createdAt.getTime() + 30 * 60 * 1000);
+            if (new Date() > expiresAt) {
+                return res.status(400).json({
+                    success: false,
+                    error: "Code expired"
+                })
+            };
+
+            const valid = bycrypt.compare(data.verificationCode.toString(), user.verificationCode.verificationCode);
+            if (!valid) {
+                return res.status(400).json({
+                    success: false,
+                    error: "Code not valid"
+                })
+            };
+
+            await prisma.user.update({
+                where: { id: user.id },
+                data: { verified: true }
+            });
+
+            await prisma.verificationCode.delete({
+                where: { id: user.verificationCode.id }
+            });
+
+            return res.status(200).json({
+                success: true
+            });
+        }
+        catch (err) {
+            return res.status(500).json({
+                success: false,
+                error: "Internal server error"
+            })
+        }
+
+    })
+
     function authenticateToken(req: Request, res: Response, next: NextFunction) {
         const authHeader = req.headers['authorization'];
         const token = authHeader && authHeader.split(' ')[1];
@@ -236,7 +297,7 @@ async function main() {
         updatedAt: Date;
     }) {
         return jwt.sign({ id: user.id, email: user.email }, process.env.ACCESS_TOKEN_SECRET!, {
-            expiresIn: "30s"
+            expiresIn: "30m"
         });
     }
 }

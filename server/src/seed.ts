@@ -8,6 +8,7 @@ main()
     .finally(() => prisma.$disconnect())
 
 async function main() {
+    await prisma.verificationCode.deleteMany();
     await prisma.user.deleteMany();
     await prisma.user.createMany({
         data: [

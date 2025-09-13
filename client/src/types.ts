@@ -9,6 +9,21 @@ export type ResponsiveVariants = {
 }
 //SHADCN PROPS
 export type ResponsiveProps = React.HTMLAttributes<HTMLDivElement> & ResponsiveVariants;
+export type ProfileAvatarProps = React.HTMLAttributes<HTMLDivElement> & {
+    variant?: 'sidebar' | 'mainbar',
+    username?: string,
+    avatarUrl?: string
+}
+export type ColumnDividerProps = React.HTMLAttributes<HTMLDivElement> & {
+    variant?: 'thin' | 'medium' | 'thick'
+}
+export type NavlinkProps = React.HTMLAttributes<HTMLDivElement> & {
+    variant?: 'mainbar' | 'sidebar'
+}
+//COMPONENT PROPS
+export type ProfileIconProps = {
+    avatarProps: ProfileAvatarProps
+}
 //STORES
 export type SidebarStore = {
     enabled: boolean,

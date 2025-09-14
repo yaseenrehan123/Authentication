@@ -22,12 +22,12 @@ const Sidebar = () => {
         gap-4 pt-10 pl-2 pr-2 text-center text-white overflow-y-auto sidebar'>
                 <ProfileIcon variant='sidebar' username='Magstar' />
                 <ColumnDivider variant='thin' />
-                <Navlink variant='sidebar'> <FaSignInAlt /> {!loggedIn ? 'Sign In' : 'Sign Out'}</Navlink>
-                <Navlink variant='sidebar'><RiAccountCircleLine /> Account</Navlink>
+                <Navlink variant='sidebar' to={!loggedIn ? '' : '/signup'}> <FaSignInAlt /> {!loggedIn ? 'Sign In' : 'Sign Out'}</Navlink>
+                <Navlink variant='sidebar' to={'/profile'}><RiAccountCircleLine /> Profile</Navlink>
                 <ColumnDivider variant='thin' />
-                <Navlink variant='sidebar'><FaHome />Home</Navlink>
-                <Navlink variant='sidebar'><FaInfoCircle />About</Navlink>
-                <Navlink variant='sidebar'><FaPhoneAlt />Contact</Navlink>
+                <Navlink variant='sidebar' to={'/'}><FaHome />Home</Navlink>
+                <Navlink variant='sidebar' to={'/about'}><FaInfoCircle />About</Navlink>
+                <Navlink variant='sidebar' to={'/contact'}><FaPhoneAlt />Contact</Navlink>
                 <NavCancelIcon />
             </div>
         </div>

@@ -9,9 +9,9 @@ const Mainbar = () => {
         fixed top-0 left-0'>
             <div></div>
             <div className='flex items-center justify-center gap-4'>
-                <Responsive display="hidden" md="flex"><Navlink>Home</Navlink></Responsive>
-                <Responsive display="hidden" md="flex"><Navlink>About</Navlink></Responsive>
-                <Responsive display="hidden" md="flex"><Navlink>Contact</Navlink></Responsive>
+                <Responsive display="hidden" md="flex"><Navlink to={'/'}>Home</Navlink></Responsive>
+                <Responsive display="hidden" md="flex"><Navlink to={'/about'}>About</Navlink></Responsive>
+                <Responsive display="hidden" md="flex"><Navlink to={'/contact'}>Contact</Navlink></Responsive>
             </div>
             <div className='flex items-center justify-center'>
                 <ProfileIcon username='Magstar' />

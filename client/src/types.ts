@@ -1,4 +1,5 @@
 import type { HTMLAttributes } from "react";
+import type { NavLinkProps as RouterNavlinkProps } from "react-router";
 
 //SHADCN VARIANTS
 export type ResponsiveVariants = {
@@ -12,13 +13,16 @@ export type ResponsiveProps = React.HTMLAttributes<HTMLDivElement> & ResponsiveV
 export type ProfileAvatarProps = React.HTMLAttributes<HTMLDivElement> & {
     variant?: 'sidebar' | 'mainbar',
     username?: string,
-    avatarUrl?: string
+    avatarUrl?: string,
 }
 export type ColumnDividerProps = React.HTMLAttributes<HTMLDivElement> & {
     variant?: 'thin' | 'medium' | 'thick'
 }
-export type NavlinkProps = React.HTMLAttributes<HTMLDivElement> & {
-    variant?: 'mainbar' | 'sidebar'
+export type NavlinkProps = React.HTMLAttributes<HTMLDivElement> & Partial<RouterNavlinkProps> & {
+    variant?: 'mainbar' | 'sidebar',
+}
+export type FormFieldProps = React.HTMLAttributes<HTMLInputElement> & {
+    variant?: 'default'
 }
 //COMPONENT PROPS
 export type ProfileIconProps = {

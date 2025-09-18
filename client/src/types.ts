@@ -1,5 +1,6 @@
-import type { HTMLAttributes } from "react";
 import type { NavLinkProps as RouterNavlinkProps } from "react-router";
+import { signupSchema } from "./lib/validations";
+import { z } from "zod";
 
 //SHADCN VARIANTS
 export type ResponsiveVariants = {
@@ -21,8 +22,14 @@ export type ColumnDividerProps = React.HTMLAttributes<HTMLDivElement> & {
 export type NavlinkProps = React.HTMLAttributes<HTMLDivElement> & Partial<RouterNavlinkProps> & {
     variant?: 'mainbar' | 'sidebar',
 }
-export type FormFieldProps = React.HTMLAttributes<HTMLInputElement> & {
+export type FormFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
+    variant?: 'default' | 'small' | 'large',
+}
+export type SubmitButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     variant?: 'default'
+}
+export type MessageProps = React.HTMLAttributes<HTMLDivElement> & {
+    variant?: 'default' | 'success' | 'loading' | 'error'
 }
 //COMPONENT PROPS
 export type ProfileIconProps = {
@@ -33,3 +40,5 @@ export type SidebarStore = {
     enabled: boolean,
     setEnabled: (newVal: boolean) => void
 }
+//INFERS
+export type SignupFormFields = z.infer<typeof signupSchema>

@@ -11,7 +11,19 @@ const SignupForm = () => {
         resolver: zodResolver(signupSchema)
     });
     const onSubmit: SubmitHandler<SignupFormFields> = async (data) => {
-        console.log(data);
+        try {
+            const path: string = `${import.meta.env.VITE_SERVER_PATH}/signup`;
+            await fetch(path, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+        }
+        catch (err) {
+            throw new Error(`${err}`);
+        }
         reset();
     };
     return (

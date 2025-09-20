@@ -1,5 +1,4 @@
 import React from 'react'
-import SignupHeader from './SignupHeader'
 import SignupForm from './SignupForm'
 
 const SignupPage = () => {

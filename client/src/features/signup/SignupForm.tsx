@@ -6,25 +6,30 @@ import React from 'react'
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema } from '@/lib/validations';
+import { useMutation, useQuery } from '@tanstack/react-query';
 const SignupForm = () => {
     const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<SignupFormFields>({
         resolver: zodResolver(signupSchema)
     });
-    const onSubmit: SubmitHandler<SignupFormFields> = async (data) => {
-        try {
+    const signupMutation = useMutation({
+        mutationKey: ['signup'],
+        mutationFn: async (data: SignupFormFields) => {
             const path: string = `${import.meta.env.VITE_SERVER_PATH}/signup`;
-            await fetch(path, {
+            const res = await fetch(path, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(data)
             });
-        }
-        catch (err) {
-            throw new Error(`${err}`);
-        }
-        reset();
+            if (!res.ok) {
+                throw new Error("Something went wrong...");
+            }
+        },
+        onSuccess: () => reset()
+    });
+    const onSubmit: SubmitHandler<SignupFormFields> = async (data) => {
+        signupMutation.mutate(data);
     };
     return (
         <div className='flex items-center flex-col gap-8 border-2 border-black bg-[rgb(10,19,23)] rounded-[8px] p-6'>
@@ -53,6 +58,9 @@ const SignupForm = () => {
                     {isSubmitting ? 'Loading...' : 'Submit'}
                 </SubmitButton>
             </form >
+            <Message variant={signupMutation.isError ? 'error' : signupMutation.isSuccess ? 'success' : 'default'}>
+                {signupMutation.isError ? `${signupMutation.error}` : signupMutation.isSuccess ? 'Success' : ''}
+            </Message>
         </div >
 
     )

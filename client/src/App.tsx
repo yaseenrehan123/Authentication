@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Layout from './components/app/Layout'
 import NotFoundPage from './components/app/NotFoundPage'
 import SignupPage from './features/signup/SignupPage'
+import LoginPage from './features/login/LoginPage';
 
 const App = () => {
   const query = new QueryClient();
@@ -14,7 +15,8 @@ const App = () => {
       element: <Layout />,
       errorElement: <NotFoundPage />,
       children: [
-        { path: 'signup', element: <SignupPage /> }
+        { path: 'signup', element: <SignupPage /> },
+        { path: 'login', element: <LoginPage /> }
       ]
     }
   ])

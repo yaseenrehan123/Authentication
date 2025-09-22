@@ -1,5 +1,5 @@
 import type { NavLinkProps as RouterNavlinkProps } from "react-router";
-import { signupSchema } from "./lib/validations";
+import { loginSchema, signupSchema } from "./lib/validations";
 import { z } from "zod";
 
 //SHADCN VARIANTS
@@ -31,6 +31,13 @@ export type SubmitButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & 
 export type MessageProps = React.HTMLAttributes<HTMLDivElement> & {
     variant?: 'default' | 'success' | 'loading' | 'error'
 }
+export type FormContainerProps = React.HTMLAttributes<HTMLDivElement> & {
+    variant?: 'light' | 'dark'
+};
+export type AlignmentProps = React.HTMLAttributes<HTMLDivElement> & {
+    variant?: 'rowLeft' | 'rowCenter' | 'rowRight' | 'colLeft' | 'colCenter' | 'colRight',
+    gap?: 'sm' | 'md' | 'lg'
+};
 //COMPONENT PROPS
 export type ProfileIconProps = {
     avatarProps: ProfileAvatarProps
@@ -42,3 +49,4 @@ export type SidebarStore = {
 }
 //INFERS
 export type SignupFormFields = z.infer<typeof signupSchema>
+export type LoginFormFields = z.infer<typeof loginSchema>

@@ -22,3 +22,12 @@ export const loginSchema = z.object({
         .min(8, "Password must contain minimum 8 characters")
         .max(15, "Password cant exceed more than 15 characters")
 });
+export const verificationSchema = z.object({
+    pin1: z.number("Field cant be empty").min(0).max(9),
+    pin2: z.number("Field cant be empty").min(0).max(9),
+    pin3: z.number("Field cant be empty").min(0).max(9),
+    pin4: z.number("Field cant be empty").min(0).max(9),
+    pin5: z.number("Field cant be empty").min(0).max(9),
+    pin6: z.number("Field cant be empty").min(0).max(9),
+});
+export const verificationCodeSchema = z.string().length(6);

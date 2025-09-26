@@ -2,7 +2,7 @@ import Alignment from '@/components/ui/alignment'
 import FormContainer from '@/components/ui/formContainer'
 import FormField from '@/components/ui/formField'
 import Message from '@/components/ui/message'
-import SubmitButton from '@/components/ui/submitButton'
+import Button from '@/components/ui/button'
 import { loginSchema } from '@/lib/validations'
 import type { LoginFormFields } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -55,9 +55,9 @@ const LoginForm = () => {
                     <FormField variant='large' placeholder='Password' minLength={8} maxLength={15} {...register('password')} />
                     <Message variant='error'>{errors.password?.message}</Message>
                 </Alignment>
-                <SubmitButton type='submit' disabled={loginMutation.isPending}>
+                <Button type='submit' disabled={loginMutation.isPending}>
                     {loginMutation.isPending ? 'Loading...' : 'Submit'}
-                </SubmitButton>
+                </Button>
                 <Message variant={loginMutation.isError ? 'error' : loginMutation.isSuccess ? 'success' : 'default'}>
                     {loginMutation.isError ? `${loginMutation.error}` : loginMutation.isSuccess ? 'Success' : ''}
                 </Message>

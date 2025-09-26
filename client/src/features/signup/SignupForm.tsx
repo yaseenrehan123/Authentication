@@ -1,6 +1,6 @@
 import FormField from '@/components/ui/formField'
 import Message from '@/components/ui/message';
-import SubmitButton from '@/components/ui/submitButton';
+import Button from '@/components/ui/button';
 import type { SignupFormFields } from '@/types';
 import React from 'react'
 import { useForm, type SubmitHandler } from "react-hook-form";
@@ -31,10 +31,13 @@ const SignupForm = () => {
                 throw new Error(body.error || "Unknown error occured");
             }
         },
-        onSuccess: () => reset()
+        onSuccess: () => {
+            reset
+        }
     });
     const onSubmit: SubmitHandler<SignupFormFields> = async (data) => {
         signupMutation.mutate(data);
+        sessionStorage.setItem("verifyEmail", data.email);
     };
     return (
         <FormContainer variant='dark'>
@@ -59,9 +62,9 @@ const SignupForm = () => {
                     <Message variant='error'>{errors.confirmPassword?.message}</Message>
                 </Alignment>
 
-                <SubmitButton type='submit' disabled={signupMutation.isPending}>
+                <Button type='submit' disabled={signupMutation.isPending}>
                     {signupMutation.isPending ? 'Loading...' : 'Submit'}
-                </SubmitButton>
+                </Button>
             </form >
             <Message variant={signupMutation.isError ? 'error' : signupMutation.isSuccess ? 'success' : 'default'}>
                 {signupMutation.isError ? `${signupMutation.error}` : signupMutation.isSuccess ? 'Success' : ''}

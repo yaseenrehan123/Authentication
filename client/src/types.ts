@@ -1,5 +1,5 @@
 import type { NavLinkProps as RouterNavlinkProps } from "react-router";
-import { loginSchema, signupSchema } from "./lib/validations";
+import { loginSchema, signupSchema, verificationCodeSchema, verificationSchema } from "./lib/validations";
 import { z } from "zod";
 
 //SHADCN VARIANTS
@@ -25,7 +25,7 @@ export type NavlinkProps = React.HTMLAttributes<HTMLDivElement> & Partial<Router
 export type FormFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
     variant?: 'default' | 'small' | 'large',
 }
-export type SubmitButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     variant?: 'default'
 }
 export type MessageProps = React.HTMLAttributes<HTMLDivElement> & {
@@ -50,3 +50,5 @@ export type SidebarStore = {
 //INFERS
 export type SignupFormFields = z.infer<typeof signupSchema>
 export type LoginFormFields = z.infer<typeof loginSchema>
+export type VerificationFields = z.infer<typeof verificationSchema>
+export type VerifcationCode = z.infer<typeof verificationCodeSchema>

@@ -6,6 +6,7 @@ import Layout from './components/app/Layout'
 import NotFoundPage from './components/app/NotFoundPage'
 import SignupPage from './features/signup/SignupPage'
 import LoginPage from './features/login/LoginPage';
+import VerifyPage from './features/verify/VerifyPage';
 
 const App = () => {
   const query = new QueryClient();
@@ -16,7 +17,8 @@ const App = () => {
       errorElement: <NotFoundPage />,
       children: [
         { path: 'signup', element: <SignupPage /> },
-        { path: 'login', element: <LoginPage /> }
+        { path: 'login', element: <LoginPage /> },
+        { path: 'verify', element: <VerifyPage /> }
       ]
     }
   ])

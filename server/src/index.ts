@@ -51,6 +51,53 @@ async function main() {
                     error: 'passwords not matching'
                 })
             };
+
+            const user = await prisma.user.findUnique({
+                where: { email: data.email }
+            });
+            if (user) {
+                if (!user.verified) {
+                    const verificationCode = crypto.randomInt(100000, 999999);
+                    const hashedVerificationCode = await bycrypt.hash(verificationCode.toString(), 10);
+                    const hashedPassword = await bycrypt.hash(data.password, 10);
+                    await prisma.user.update({
+                        where: { email: user.email },
+                        data: {
+                            password: hashedPassword,
+                            verificationCode: {
+                                delete: true,
+                                create: {
+                                    verificationCode: hashedVerificationCode
+                                }
+                            }
+                        }
+                    });
+                    await sendMail({
+                        subject: 'Verify your email address',
+                        email: process.env.MY_GOOGLE_EMAIL!,
+                        message: `
+                <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px;">
+                <h2 style="color: #333;">Verify your email address</h2>
+                <p>Thanks for signing up, <b>${user.username}</b>!</p>
+                <p>Please verify your email by copying the code below:</p>
+                <div style="font-size: 24px; font-weight: bold; margin: 20px 0; color: #4CAF50;">
+                    ${verificationCode}
+                </div>
+                <p>This code expires in <b>30 minutes</b>.</p>
+                </div>
+            `,
+                        address: user.email
+                    });
+                    return res.status(200).json({
+                        success: true,
+                        pendingVerification: true
+                    });
+                }
+                return res.status(400).json({
+                    success: false,
+                    error: "Account already exists"
+                });
+            }
             const hashedPassword = await bycrypt.hash(data.password, 10);
             const verificationCode = crypto.randomInt(100000, 999999);
             const hashedVerificationCode = await bycrypt.hash(verificationCode.toString(), 10);
@@ -299,5 +346,8 @@ async function main() {
         return jwt.sign({ id: user.id, email: user.email }, process.env.ACCESS_TOKEN_SECRET!, {
             expiresIn: "30m"
         });
+    }
+    function generateVerificationCode() {
+
     }
 }

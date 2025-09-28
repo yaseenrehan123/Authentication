@@ -6,11 +6,13 @@ import React from 'react'
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema } from '@/lib/validations';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import FormContainer from '@/components/ui/formContainer';
 import Alignment from '@/components/ui/alignment';
+import { useNavigate } from 'react-router';
 const SignupForm = () => {
-    const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<SignupFormFields>({
+    const navigate = useNavigate();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<SignupFormFields>({
         resolver: zodResolver(signupSchema)
     });
     const signupMutation = useMutation({
@@ -32,7 +34,8 @@ const SignupForm = () => {
             }
         },
         onSuccess: () => {
-            reset
+            reset()
+            navigate('/verify')
         }
     });
     const onSubmit: SubmitHandler<SignupFormFields> = async (data) => {

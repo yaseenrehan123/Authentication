@@ -7,6 +7,7 @@ import Message from '@/components/ui/message'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { verificationSchema } from '@/lib/validations'
 import { useMutation } from '@tanstack/react-query'
+import ResendCode from './ResendCode'
 
 const VerifyForm = () => {
     const { register, reset, handleSubmit, formState: { errors } } = useForm<VerificationFields>({
@@ -100,6 +101,7 @@ const VerifyForm = () => {
             <Message variant={isError ? 'error' : isSuccess ? 'success' : 'default'}>
                 {isError ? `${error}` : isSuccess ? 'Success' : ''}
             </Message>
+            <ResendCode />
         </FormContainer>
     )
 }

@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { PrismaClient } from "../../generated/prisma/index.js";
 import { signupSchema } from "../validations.js";
-import { sendMail } from "../nodemailer.js";
 import issueVerificationCode from "../utils/issueVerificationCode.js";
 
 const signupRouter = express.Router();

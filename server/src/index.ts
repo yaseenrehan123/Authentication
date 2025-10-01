@@ -8,6 +8,7 @@ import loginRouter from "./routes/login.js";
 import refreshRouter from "./routes/refresh.js";
 import meRouter from "./routes/me.js";
 import verifyRouter from "./routes/verify.js";
+import resendCodeRouter from "./routes/resend-code.js";
 const app = express();
 const PORT = 8081;
 const prisma = new PrismaClient();
@@ -41,5 +42,5 @@ async function main() {
     app.use('/refresh', refreshRouter);
     app.use('me', meRouter);
     app.use('/verify', verifyRouter);
-
+    app.use('/resend-code', resendCodeRouter)
 }

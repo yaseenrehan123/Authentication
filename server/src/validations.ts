@@ -16,3 +16,7 @@ export const verificationSchema = z.object({
     email: z.email(),
     verificationCode: z.string().length(6)
 });
+
+export const resendCodeSchema = z.object({
+    email: z.email()
+});

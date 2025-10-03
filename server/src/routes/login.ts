@@ -43,12 +43,17 @@ loginRouter.post('/', async (req, res) => {
             })
         };
         const accessToken = generateAccessToken(user);
-        const refreshToken = jwt.sign({ id: user.id, email: user.email }, process.env.REFRESH_TOKEN_SECRET!);
+        const refreshToken = jwt.sign({ id: user.id, email: user.email }, process.env.REFRESH_TOKEN_SECRET!,);
+
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: 'strict'
+        })
 
         return res.status(200).json({
             success: true,
             accessToken: accessToken,
-            refreshToken: refreshToken
         });
     }
     catch (err) {

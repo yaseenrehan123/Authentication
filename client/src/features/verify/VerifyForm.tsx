@@ -8,13 +8,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { verificationSchema } from '@/lib/validations'
 import { useMutation } from '@tanstack/react-query'
 import ResendCode from './ResendCode'
+import { useNavigate } from 'react-router'
 
 const VerifyForm = () => {
     const [message, setMessage] = useState<string>('');
+    const navigate = useNavigate();
     const { register, reset, handleSubmit, formState: { errors } } = useForm<VerificationFields>({
         resolver: zodResolver(verificationSchema)
     });
-    const { isPending, error, isError, isSuccess, mutate } = useMutation({
+    const { isPending, isError, isSuccess, mutate } = useMutation({
         mutationKey: ['verify'],
         mutationFn: (async (data: VerifcationCode) => {
             const obj = {
@@ -39,6 +41,7 @@ const VerifyForm = () => {
         onSuccess: () => {
             reset()
             setMessage('Success')
+            navigate('/')
         },
         onError: (err) => {
             setMessage(err.message);

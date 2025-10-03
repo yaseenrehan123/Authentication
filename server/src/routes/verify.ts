@@ -2,6 +2,8 @@ import express from "express";
 import bycrypt from "bcrypt";
 import { PrismaClient } from "../../generated/prisma/client.js";
 import { verificationSchema } from "../validations.js";
+import generateAccessToken from "../utils/generateAccessToken.js";
+import jwt from "jsonwebtoken";
 
 const verifyRouter = express.Router();
 const prisma = new PrismaClient();
@@ -35,7 +37,7 @@ verifyRouter.post('/', async (req, res) => {
             })
         };
 
-        const valid = bycrypt.compare(data.verificationCode.toString(), user.verificationCode.verificationCode);
+        const valid = await bycrypt.compare(data.verificationCode.toString(), user.verificationCode.verificationCode);
         if (!valid) {
             return res.status(400).json({
                 success: false,
@@ -52,8 +54,18 @@ verifyRouter.post('/', async (req, res) => {
             where: { id: user.verificationCode.id }
         });
 
+        const accessToken = generateAccessToken(user);
+        const refreshToken = jwt.sign({ id: user.id, email: user.email }, process.env.REFRESH_TOKEN_SECRET!)
+
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: 'strict'
+        });
+
         return res.status(200).json({
-            success: true
+            success: true,
+            accessToken: accessToken
         });
     }
     catch (err) {

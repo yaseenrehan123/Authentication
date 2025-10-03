@@ -1,6 +1,6 @@
 import FormContainer from '@/components/ui/formContainer'
 import Button from '@/components/ui/button'
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import type { VerifcationCode, VerificationFields } from '@/types'
 import Message from '@/components/ui/message'
@@ -10,6 +10,7 @@ import { useMutation } from '@tanstack/react-query'
 import ResendCode from './ResendCode'
 
 const VerifyForm = () => {
+    const [message, setMessage] = useState<string>('');
     const { register, reset, handleSubmit, formState: { errors } } = useForm<VerificationFields>({
         resolver: zodResolver(verificationSchema)
     });
@@ -35,7 +36,13 @@ const VerifyForm = () => {
                 throw new Error(body.error || "Unkown error occured")
             };
         }),
-        onSuccess: () => reset()
+        onSuccess: () => {
+            reset()
+            setMessage('Success')
+        },
+        onError: (err) => {
+            setMessage(err.message);
+        }
     });
     const length = 6
     const pinFields = ["pin1", "pin2", "pin3", "pin4", "pin5", "pin6"] as const;
@@ -72,7 +79,6 @@ const VerifyForm = () => {
         return undefined; // no error
     };
 
-
     return (
         <FormContainer variant='dark'>
             <form className='flex items-center flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
@@ -94,13 +100,13 @@ const VerifyForm = () => {
                 <Button type='submit' disabled={isPending}>
                     {isPending ? 'Loading...' : 'Verify'}
                 </Button>
-                <Message variant='error'>
-                    {showErrorText()}
-                </Message>
+                <Message variant='error'
+                    content={showErrorText()} />
             </form>
-            <Message variant={isError ? 'error' : isSuccess ? 'success' : 'default'}>
-                {isError ? `${error}` : isSuccess ? 'Success' : ''}
-            </Message>
+            <Message
+                variant={isError ? 'error' : isSuccess ? 'success' : 'default'}
+                disableOnContent='md'
+                content={message} />
             <ResendCode />
         </FormContainer>
     )

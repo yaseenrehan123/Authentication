@@ -7,10 +7,12 @@ import { loginSchema } from '@/lib/validations'
 import type { LoginFormFields } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 const LoginForm = () => {
+    const [message, setMessage] = useState<string>('');
+
     const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<LoginFormFields>({
         resolver: zodResolver(loginSchema)
     });
@@ -33,7 +35,13 @@ const LoginForm = () => {
                 throw new Error(body.error || "Unknown error occured");
             }
         },
-        onSuccess: () => reset()
+        onSuccess: () => {
+            reset()
+            setMessage('Success')
+        },
+        onError: (err) => {
+            setMessage(err.message)
+        }
     });
 
     const onSubmit = async (data: LoginFormFields) => {
@@ -49,18 +57,19 @@ const LoginForm = () => {
             <form className='flex items-center flex-col gap-5' onSubmit={handleSubmit(onSubmit)}>
                 <Alignment variant='colLeft'>
                     <FormField variant='large' placeholder='Email' {...register('email')} />
-                    <Message variant='error'>{errors.email?.message}</Message>
+                    <Message variant='error' content={errors.email?.message} />
                 </Alignment>
                 <Alignment variant='colLeft'>
                     <FormField variant='large' placeholder='Password' minLength={8} maxLength={15} {...register('password')} />
-                    <Message variant='error'>{errors.password?.message}</Message>
+                    <Message variant='error' content={errors.password?.message} />
                 </Alignment>
                 <Button type='submit' disabled={loginMutation.isPending}>
                     {loginMutation.isPending ? 'Loading...' : 'Submit'}
                 </Button>
-                <Message variant={loginMutation.isError ? 'error' : loginMutation.isSuccess ? 'success' : 'default'}>
-                    {loginMutation.isError ? `${loginMutation.error}` : loginMutation.isSuccess ? 'Success' : ''}
-                </Message>
+                <Message
+                    variant={loginMutation.isError ? 'error' : loginMutation.isSuccess ? 'success' : 'default'}
+                    disableOnContent='md'
+                    content={message} />
             </form>
         </FormContainer>
     )

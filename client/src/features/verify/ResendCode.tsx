@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import React, { useEffect, useState } from 'react'
 
 const ResendCode = () => {
-    const [message, setMessage] = useState<String | null>(null);
+    const [message, setMessage] = useState<string>('');
 
     const { mutate, isError, isPending, isSuccess } = useMutation({
         mutationKey: ['resendCode'],
@@ -36,10 +36,7 @@ const ResendCode = () => {
     }
 
     useEffect(() => {
-        if (message) {
-            const timer = setTimeout(() => setMessage(null), 2000);
-            return () => clearTimeout(timer);
-        }
+        console.log(message);
     }, [message])
 
     return (
@@ -47,9 +44,10 @@ const ResendCode = () => {
             <div className='text-purple-500 hover:text-purple-700 hover:cursor-pointer transition-all duration-150 active:scale-98'>
                 Receive new code
             </div>
-            <Message variant={isError ? 'error' : isSuccess ? 'success' : 'default'}>
-                {message}
-            </Message>
+            <Message
+                variant={isError ? 'error' : isSuccess ? 'success' : 'default'}
+                content={message}
+                disableOnContent='md' />
         </div>
     )
 }

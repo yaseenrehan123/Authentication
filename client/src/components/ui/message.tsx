@@ -1,12 +1,43 @@
 import { cn } from '@/lib/utils'
 import type { MessageProps } from '@/types'
 import { cva } from 'class-variance-authority'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-const Message = ({ variant, children, className, ...props }: MessageProps) => {
+const Message = ({ variant, children, content, disableOnContent = 'never', className, ...props }: MessageProps) => {
+    const [display, setDisplay] = useState<string>("");
+
+    const getDisableDuration = (): number => {
+        let dur: number = 0;
+        switch (disableOnContent) {
+            case 'sm':
+                dur = 1000
+                break;
+            case 'md':
+                dur = 2000
+                break;
+            case 'lg':
+                dur = 2500
+                break;
+            default:
+                dur = 0
+                break;
+        }
+        return dur;
+    };
+
+    useEffect(() => {
+        if (!content) return;
+        setDisplay(content);
+        if (disableOnContent !== "never") {
+            const timer = setTimeout(() => setDisplay(""), getDisableDuration());
+            return () => clearTimeout(timer);
+        }
+
+    }, [content]);
+
     return (
         <div className={cn(variants({ variant }), className)} {...props}>
-            {children}
+            {display}
         </div>
     )
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import VerifyForm from './VerifyForm'
+import Message from '@/components/ui/message'
 
 const VerifyPage = () => {
     return (

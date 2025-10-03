@@ -29,7 +29,9 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     variant?: 'default'
 }
 export type MessageProps = React.HTMLAttributes<HTMLDivElement> & {
-    variant?: 'default' | 'success' | 'loading' | 'error'
+    variant?: 'default' | 'success' | 'loading' | 'error',
+    disableOnContent?: 'never' | 'sm' | 'md' | 'lg',
+    content?: String
 }
 export type FormContainerProps = React.HTMLAttributes<HTMLDivElement> & {
     variant?: 'light' | 'dark'

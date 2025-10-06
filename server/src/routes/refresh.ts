@@ -5,9 +5,9 @@ import generateAccessToken from "../utils/generateAccessToken.js";
 const refreshRouter = express.Router();
 
 refreshRouter.post('/', (req, res) => {
-    const refreshToken = req.body.refreshToken;
+    const refreshToken = req.cookies?.refreshToken;
     if (!refreshToken) {
-        res.status(401).json({
+        return res.status(401).json({
             success: false,
             error: "No refresh token"
         })

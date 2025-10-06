@@ -2,6 +2,11 @@ import type { NavLinkProps as RouterNavlinkProps } from "react-router";
 import { loginSchema, signupSchema, verificationCodeSchema, verificationSchema } from "./lib/validations";
 import { z } from "zod";
 
+//GENERAL
+export type JwtPayload = {
+    exp: number
+};
+
 //SHADCN VARIANTS
 export type ResponsiveVariants = {
     display?: 'block' | 'inline' | 'inlineBlock' | 'flex' | 'inlineFlex' | 'grid' | 'hidden',
@@ -48,6 +53,12 @@ export type ProfileIconProps = {
 export type SidebarStore = {
     enabled: boolean,
     setEnabled: (newVal: boolean) => void
+}
+export type AuthStore = {
+    accessToken: string,
+    setAccessToken: (newVal: string) => void,
+    loggedIn: boolean,
+    setLoggedIn: (newVal: boolean) => void
 }
 //INFERS
 export type SignupFormFields = z.infer<typeof signupSchema>

@@ -9,11 +9,14 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useAuthStore } from '@/stores/useAuthStore'
 
 const LoginForm = () => {
     const [message, setMessage] = useState<string>('');
+    const setAccessToken = useAuthStore((state) => state.setAccessToken);
+    const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
 
-    const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<LoginFormFields>({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<LoginFormFields>({
         resolver: zodResolver(loginSchema)
     });
 
@@ -26,6 +29,7 @@ const LoginForm = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: 'include',
                 body: JSON.stringify(data)
             });
 
@@ -33,6 +37,12 @@ const LoginForm = () => {
 
             if (!res.ok) {
                 throw new Error(body.error || "Unknown error occured");
+            }
+
+            const accessToken: string = body?.accessToken;
+            if (accessToken) {
+                setAccessToken(accessToken);
+                setLoggedIn(true);
             }
         },
         onSuccess: () => {

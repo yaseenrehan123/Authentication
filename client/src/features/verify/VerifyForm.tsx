@@ -9,9 +9,13 @@ import { verificationSchema } from '@/lib/validations'
 import { useMutation } from '@tanstack/react-query'
 import ResendCode from './ResendCode'
 import { useNavigate } from 'react-router'
+import { useAuthStore } from '@/stores/useAuthStore'
 
 const VerifyForm = () => {
     const [message, setMessage] = useState<string>('');
+    const setAccessToken = useAuthStore((state) => state.setAccessToken);
+    const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
+
     const navigate = useNavigate();
     const { register, reset, handleSubmit, formState: { errors } } = useForm<VerificationFields>({
         resolver: zodResolver(verificationSchema)
@@ -29,6 +33,7 @@ const VerifyForm = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: 'include',
                 body: JSON.stringify(obj)
             });
 
@@ -37,6 +42,14 @@ const VerifyForm = () => {
             if (!res.ok) {
                 throw new Error(body.error || "Unkown error occured")
             };
+
+            const accessToken: string = body?.accessToken;
+            if (accessToken) {
+                console.log("ACCESS TOKEN:", accessToken);
+                setAccessToken(accessToken);
+                setLoggedIn(true);
+            };
+
         }),
         onSuccess: () => {
             reset()

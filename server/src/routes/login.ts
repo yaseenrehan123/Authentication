@@ -48,8 +48,14 @@ loginRouter.post('/', async (req, res) => {
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: 'strict'
+            sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax'
         })
+
+        res.cookie('hasRefreshToken', true, {
+            httpOnly: false,
+            sameSite: 'lax'
+        });
+
 
         return res.status(200).json({
             success: true,

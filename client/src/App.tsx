@@ -2,8 +2,8 @@ import React from 'react'
 import Navbar from './components/navbar/Navbar'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Layout from './components/app/Layout'
-import NotFoundPage from './components/app/NotFoundPage'
+import Layout from './app/Layout'
+import NotFoundPage from './app/NotFoundPage'
 import SignupPage from './features/signup/SignupPage'
 import LoginPage from './features/login/LoginPage';
 import VerifyPage from './features/verify/VerifyPage';

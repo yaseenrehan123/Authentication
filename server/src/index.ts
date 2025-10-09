@@ -45,7 +45,7 @@ async function main() {
     app.use('/signup', signupRouter);
     app.use('/login', loginRouter);
     app.use('/refresh', refreshRouter);
-    app.use('me', meRouter);
+    app.use('/me', meRouter);
     app.use('/verify', verifyRouter);
     app.use('/resend-code', resendCodeRouter)
 }

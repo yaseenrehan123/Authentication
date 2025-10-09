@@ -60,6 +60,18 @@ export type AuthStore = {
     loggedIn: boolean,
     setLoggedIn: (newVal: boolean) => void
 }
+export type ProfileStore = {
+    id: string,
+    username: string,
+    email: string,
+    createdAt: Date | null,
+    updatedAt: Date | null,
+    setId: (newVal: string) => void,
+    setUsername: (newVal: string) => void
+    setEmail: (newVal: string) => void
+    setCreatedAt: (newVal: Date | null) => void,
+    setUpdatedAt: (newVal: Date | null) => void
+}
 //INFERS
 export type SignupFormFields = z.infer<typeof signupSchema>
 export type LoginFormFields = z.infer<typeof loginSchema>

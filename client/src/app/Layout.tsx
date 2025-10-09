@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react'
 import { Outlet } from 'react-router'
-import Navbar from '../navbar/Navbar'
+import Navbar from '../components/navbar/Navbar'
 import useAutoAuth from '@/hooks/useAutoAuth'
 import { useAuthStore } from '@/stores/useAuthStore'
+import useFetchProfile from '@/hooks/useFetchProfile'
 
 const Layout = () => {
     useAutoAuth();
+    useFetchProfile();
     const loggedIn = useAuthStore((state) => state.loggedIn);
     const accessToken = useAuthStore((state) => state.accessToken);
 

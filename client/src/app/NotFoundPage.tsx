@@ -1,5 +1,5 @@
 import React from 'react'
-import Navlink from '../ui/navlink'
+import Navlink from '../components/ui/navlink'
 
 
 const NotFoundPage = () => {

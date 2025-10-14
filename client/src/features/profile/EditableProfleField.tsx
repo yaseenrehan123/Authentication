@@ -4,6 +4,7 @@ import { useProfileStore } from '@/stores/useProfileStore';
 import type { EditableProfileFieldProps } from '@/types';
 import { MdEdit } from "react-icons/md";
 import React, { useEffect, useState } from 'react'
+import Alignment from '@/components/ui/alignment';
 
 const EditableProfleField = ({ fieldKey, label }: EditableProfileFieldProps) => {
     const [selected, setSelected] = useState<boolean>(false);
@@ -41,14 +42,15 @@ const EditableProfleField = ({ fieldKey, label }: EditableProfileFieldProps) => 
     return (
         <div>
             <div className='flex items-center justify-center gap-6 text-2xl font-roboto'>
-                {!selected && <div className='flex items-center justify-center gap-2'>
-                    <div>{label}</div>
-                    <div>{value}</div>
-                </div>}
-                {selected && <div>
-                    <FormField variant='default' bg='dark' type='text' minLength={8} maxLength={15}
-                        onChange={handleOnChange} />
-                </div>}
+                {selected ?
+                    <div>
+                        <FormField variant='default' bg='dark' type='text' minLength={8} maxLength={15}
+                            onChange={handleOnChange} />
+                    </div> :
+                    <Alignment variant='rowCenter' gap='md'>
+                        <div>{label}</div>
+                        <div>{value}</div>
+                    </Alignment>}
                 <div className={`flex items-center justify-center hover:cursor-pointer text-3xl hover:scale-96
                 transition-all duration-150
                 ${selected ? 'hover:text-white text-[#19376D]' : 'hover:text-[#19376D] text-white'}`}

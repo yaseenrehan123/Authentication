@@ -2,9 +2,11 @@ import type { ProfileAvatarProps } from '@/types';
 import { cva } from 'class-variance-authority';
 import React, { useState } from 'react'
 import { cn } from '@/lib/utils'
+import { useProfileStore } from '@/stores/useProfileStore';
 
-const ProfileAvatar = ({ variant, className, username, avatarUrl, ...props }: ProfileAvatarProps) => {
+const ProfileAvatar = ({ variant, className, avatarUrl, ...props }: ProfileAvatarProps) => {
     const [logoError, setLogoError] = useState<Boolean>(false);
+    const username = useProfileStore((state) => state.username);
     return (<div {...props} className={cn(variants({ variant }), className)}>
         {
             !logoError ?

@@ -7,6 +7,7 @@ import NotFoundPage from './app/NotFoundPage'
 import SignupPage from './features/signup/SignupPage'
 import LoginPage from './features/login/LoginPage';
 import VerifyPage from './features/verify/VerifyPage';
+import ProfilePage from './features/profile/ProfilePage';
 
 const App = () => {
   const query = new QueryClient();
@@ -18,7 +19,8 @@ const App = () => {
       children: [
         { path: 'signup', element: <SignupPage /> },
         { path: 'login', element: <LoginPage /> },
-        { path: 'verify', element: <VerifyPage /> }
+        { path: 'verify', element: <VerifyPage /> },
+        { path: 'profile', element: <ProfilePage /> }
       ]
     }
   ])

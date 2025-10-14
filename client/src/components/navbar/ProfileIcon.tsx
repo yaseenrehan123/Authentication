@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { CgProfile } from "react-icons/cg";
 import ProfileAvatar from '../ui/profileAvatar';
 import type { ProfileAvatarProps, ProfileIconProps } from '@/types';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 const ProfileIcon = ({ username, avatarUrl, ...avatarProps }: ProfileAvatarProps) => {
-    const [loggedIn, setLoggedIn] = useState<boolean>(true);
+    const loggedIn = useAuthStore((state) => state.loggedIn);
     const [logoError, setLogoError] = useState<boolean>(false);
     const setEnabled = useSidebarStore((state) => state.setEnabled);
     useEffect(() => {

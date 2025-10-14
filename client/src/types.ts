@@ -1,5 +1,5 @@
 import type { NavLinkProps as RouterNavlinkProps } from "react-router";
-import { loginSchema, signupSchema, verificationCodeSchema, verificationSchema } from "./lib/validations";
+import { loginSchema, profileSchema, signupSchema, verificationCodeSchema, verificationSchema } from "./lib/validations";
 import { z } from "zod";
 
 //GENERAL
@@ -29,6 +29,7 @@ export type NavlinkProps = React.HTMLAttributes<HTMLDivElement> & Partial<Router
 }
 export type FormFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
     variant?: 'default' | 'small' | 'large',
+    bg?: "light" | "dark"
 }
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     variant?: 'default'
@@ -48,6 +49,15 @@ export type AlignmentProps = React.HTMLAttributes<HTMLDivElement> & {
 //COMPONENT PROPS
 export type ProfileIconProps = {
     avatarProps: ProfileAvatarProps
+}
+export type EditableProfileFieldProps = {
+    label: string,
+    //value: string,
+    fieldKey: "username",
+    type?: string,
+    minLength: number,
+    maxLength: number,
+    bg: 'light' | 'dark'
 }
 //STORES
 export type SidebarStore = {
@@ -77,3 +87,11 @@ export type SignupFormFields = z.infer<typeof signupSchema>
 export type LoginFormFields = z.infer<typeof loginSchema>
 export type VerificationFields = z.infer<typeof verificationSchema>
 export type VerifcationCode = z.infer<typeof verificationCodeSchema>
+export type ProfileFormFields = z.infer<typeof profileSchema> & {
+    setUsername: (newVal: string) => void,
+    editingFields: Set<string>,
+    startEditing: (field: string) => void,
+    stopEditing: (field: string) => void,
+    clearEditing: () => void,
+    confirmEditing: () => void
+}

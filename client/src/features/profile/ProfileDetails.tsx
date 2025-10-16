@@ -19,7 +19,17 @@ const ProfileDetails = () => {
 
     return (
         <div className='flex items-baseline flex-col gap-4 text-white w-screen pl-5 font-roboto'>
-            <EditableProfleField label='Username:' fieldKey='username' minLength={8} maxLength={15} bg='dark' />
+            <EditableProfleField
+                inputProps={{
+                    bg: 'dark',
+                    type: 'text',
+                    minLength: 8,
+                    maxLength: 15,
+                    variant: 'default'
+                }}
+                label='Username:'
+                profileDataKey="username"
+                setFieldKey="setUsername" />
             <Alignment variant='rowCenter'>
                 <p>Id:</p>
                 <p>{id}</p>

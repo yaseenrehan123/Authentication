@@ -6,7 +6,16 @@ import { z } from "zod";
 export type JwtPayload = {
     exp: number
 };
-
+export type ProfileRetrievableValues = Omit<ProfileStore,
+    | 'setId'
+    | 'setUsername'
+    | 'setEmail'
+    | 'setCreatedAt'
+    | 'setUpdatedAt'
+>;
+export type SetProfileFormStoreValues = Pick<ProfileFormFields,
+    | "setUsername"
+>
 //SHADCN VARIANTS
 export type ResponsiveVariants = {
     display?: 'block' | 'inline' | 'inlineBlock' | 'flex' | 'inlineFlex' | 'grid' | 'hidden',
@@ -52,12 +61,9 @@ export type ProfileIconProps = {
 }
 export type EditableProfileFieldProps = {
     label: string,
-    //value: string,
-    fieldKey: "username",
-    type?: string,
-    minLength: number,
-    maxLength: number,
-    bg: 'light' | 'dark'
+    profileDataKey: keyof ProfileRetrievableValues,
+    setFieldKey: keyof SetProfileFormStoreValues,
+    inputProps?: FormFieldProps
 }
 //STORES
 export type SidebarStore = {

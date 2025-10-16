@@ -14,24 +14,22 @@ export const useProfileFormStore = create<ProfileFormFields>((set, get) => ({
     },
     clearEditing: () => set(() => ({ editingFields: new Set() })),
     confirmEditing: () => {
-        const username = get().username;
-        const editingFields = get().editingFields;
+        const state = get();
+        const editingFields = Array.from(state.editingFields);
 
-        const fields = Array.from(editingFields);
-        const result: Record<string, string> = {};
+        const result: Record<string, any> = {};
 
-        for (const field of fields) {
-            // Check each editable field
-            if (field === "username" && username.trim() !== "") {
-                result.username = username;
+        for (const field of editingFields) {
+            const value = state[field as keyof typeof state];
+
+            // Ensure it's a non-empty string (you can customize this rule)
+            if (typeof value === "string" && value.trim() !== "") {
+                result[field] = value;
             }
-            // You can add more fields here later, like:
-            // if (field === "bio" && bio.trim() !== "") { result.bio = bio; }
         }
 
-        console.log("✅ Confirmed editable fields:", result);
+        console.log("EDITED FIELDS DATA:", result)
 
-        // Optionally clear after confirming
         set({ editingFields: new Set() });
 
     }

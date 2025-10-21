@@ -1,6 +1,6 @@
-import type { ProfileFormFields } from "@/types";
+import type { EditProfileFormStore } from "@/types";
 import { create } from "zustand";
-export const useProfileFormStore = create<ProfileFormFields>((set, get) => ({
+export const useEditProfileFormStore = create<EditProfileFormStore>((set, get) => ({
     username: '',
     setUsername: (newVal: string) => set(({ username: newVal })),
     editingFields: new Set(),
@@ -28,9 +28,9 @@ export const useProfileFormStore = create<ProfileFormFields>((set, get) => ({
             }
         }
 
-        console.log("EDITED FIELDS DATA:", result)
-
         set({ editingFields: new Set() });
+
+        return result
 
     }
 }));

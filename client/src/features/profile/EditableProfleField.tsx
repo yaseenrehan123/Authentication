@@ -1,19 +1,22 @@
 import FormField from '@/components/ui/formField';
-import { useProfileFormStore } from '@/stores/useProfileFormStore';
+import { useEditProfileFormStore } from '@/stores/useEditProfileFormStore';
 import { useProfileStore } from '@/stores/useProfileStore';
 import type { EditableProfileFieldProps } from '@/types';
 import { MdEdit } from "react-icons/md";
 import React, { useEffect, useState } from 'react'
 import Alignment from '@/components/ui/alignment';
+import { useFormContext } from 'react-hook-form';
 
 const EditableProfleField = ({ setFieldKey, profileDataKey, label, inputProps }: EditableProfileFieldProps) => {
     const [selected, setSelected] = useState<boolean>(false);
     const profileDataValue = useProfileStore((state) => state[profileDataKey]);
 
-    const setField = useProfileFormStore((state) => state[setFieldKey]);
-    const startEditing = useProfileFormStore((state) => state.startEditing);
-    const stopEditing = useProfileFormStore((state) => state.stopEditing);
-    const editingFields = useProfileFormStore((state) => state.editingFields);
+    const setField = useEditProfileFormStore((state) => state[setFieldKey]);
+    const startEditing = useEditProfileFormStore((state) => state.startEditing);
+    const stopEditing = useEditProfileFormStore((state) => state.stopEditing);
+    const editingFields = useEditProfileFormStore((state) => state.editingFields);
+
+    const { register } = useFormContext();
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newVal: string = event.target.value;
@@ -47,7 +50,9 @@ const EditableProfleField = ({ setFieldKey, profileDataKey, label, inputProps }:
                         <FormField {...inputProps}
                             type={inputProps?.type ?? 'text'}
                             variant={inputProps?.variant ?? 'default'}
-                            onChange={handleOnChange} />
+                            {...register("username")}
+                            onChange={handleOnChange}
+                        />
                     </div> :
                     <Alignment variant='rowCenter' gap='md'>
                         <div>{label}</div>

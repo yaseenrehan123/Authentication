@@ -1,5 +1,5 @@
 import type { NavLinkProps as RouterNavlinkProps } from "react-router";
-import { loginSchema, profileSchema, signupSchema, verificationCodeSchema, verificationSchema } from "./lib/validations";
+import { loginSchema, editProfileSchema, signupSchema, verificationCodeSchema, verificationSchema } from "./lib/validations";
 import { z } from "zod";
 
 //GENERAL
@@ -13,7 +13,7 @@ export type ProfileRetrievableValues = Omit<ProfileStore,
     | 'setCreatedAt'
     | 'setUpdatedAt'
 >;
-export type SetProfileFormStoreValues = Pick<ProfileFormFields,
+export type SetProfileFormStoreValues = Pick<EditProfileFormStore,
     | "setUsername"
 >
 //SHADCN VARIANTS
@@ -88,12 +88,7 @@ export type ProfileStore = {
     setCreatedAt: (newVal: Date | null) => void,
     setUpdatedAt: (newVal: Date | null) => void
 }
-//INFERS
-export type SignupFormFields = z.infer<typeof signupSchema>
-export type LoginFormFields = z.infer<typeof loginSchema>
-export type VerificationFields = z.infer<typeof verificationSchema>
-export type VerifcationCode = z.infer<typeof verificationCodeSchema>
-export type ProfileFormFields = z.infer<typeof profileSchema> & {
+export type EditProfileFormStore = EditProfileFormFields & {
     setUsername: (newVal: string) => void,
     editingFields: Set<string>,
     startEditing: (field: string) => void,
@@ -101,3 +96,9 @@ export type ProfileFormFields = z.infer<typeof profileSchema> & {
     clearEditing: () => void,
     confirmEditing: () => void
 }
+//INFERS
+export type SignupFormFields = z.infer<typeof signupSchema>
+export type LoginFormFields = z.infer<typeof loginSchema>
+export type VerificationFields = z.infer<typeof verificationSchema>
+export type VerifcationCode = z.infer<typeof verificationCodeSchema>
+export type EditProfileFormFields = z.infer<typeof editProfileSchema>

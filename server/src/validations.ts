@@ -20,3 +20,7 @@ export const verificationSchema = z.object({
 export const resendCodeSchema = z.object({
     email: z.email()
 });
+
+export const editProfileSchema = z.object({
+    username: z.string().min(8).max(15).optional()
+});

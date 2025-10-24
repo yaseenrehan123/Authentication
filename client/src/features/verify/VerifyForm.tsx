@@ -82,6 +82,27 @@ const VerifyForm = () => {
         }
     }
 
+    const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>, idx: number) => {
+        e.preventDefault();
+
+        const pasted = e.clipboardData.getData("text").replace(/\D/g, ""); // only digits
+        if (!pasted) return;
+
+        const inputs = Array.from(
+            e.currentTarget.parentElement!.querySelectorAll("input")
+        ) as HTMLInputElement[];
+
+        // fill inputs from current index onward
+        for (let i = 0; i < pasted.length && idx + i < inputs.length; i++) {
+            inputs[idx + i].value = pasted[i];
+        }
+
+        // focus the next empty input (if any)
+        const nextEmpty = inputs.find((input) => !input.value);
+        nextEmpty?.focus();
+
+    }
+
     const onSubmit: SubmitHandler<VerificationFields> = async (data) => {
         const code: VerifcationCode = [data.pin1, data.pin2, data.pin3, data.pin4, data.pin5, data.pin6].map(String).join("");
         mutate(code);
@@ -106,6 +127,7 @@ const VerifyForm = () => {
                             type='text'
                             maxLength={1}
                             onKeyDown={(e) => handleKeyDown(e, i)}
+                            onPaste={(e) => handlePaste(e, i)}
                             {...register(field, {
                                 valueAsNumber: true,
                                 onChange: (e) => handleChange(e, i),

@@ -1,7 +1,7 @@
 import { useSidebarStore } from '@/stores/useSidebarStore';
 import React, { useEffect, useState } from 'react'
 import { CgProfile } from "react-icons/cg";
-import ProfileAvatar from '../ui/profileAvatar';
+import ProfileAvatar from '../../components/ui/profileAvatar';
 import type { ProfileAvatarProps, ProfileIconProps } from '@/types';
 import { useAuthStore } from '@/stores/useAuthStore';
 

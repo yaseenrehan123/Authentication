@@ -11,6 +11,7 @@ import meRouter from "./routes/me.js";
 import verifyRouter from "./routes/verify.js";
 import resendCodeRouter from "./routes/resend-code.js";
 import editProfileRouter from "./routes/edit-profile.js";
+import logoutRouter from "./routes/logout.js";
 const app = express();
 const PORT = 8081;
 const prisma = new PrismaClient();
@@ -50,4 +51,5 @@ async function main() {
     app.use('/verify', verifyRouter);
     app.use('/resend-code', resendCodeRouter)
     app.use('/edit-profile', editProfileRouter);
+    app.use('/logout', logoutRouter);
 }

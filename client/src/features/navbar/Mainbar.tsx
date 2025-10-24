@@ -1,8 +1,8 @@
 import React from 'react'
-import Responsive from '../ui/responsive'
+import Responsive from '../../components/ui/responsive'
 import NavMenuIcon from './NavMenuIcon'
 import ProfileIcon from './ProfileIcon'
-import Navlink from '../ui/navlink'
+import Navlink from '../../components/ui/navlink'
 const Mainbar = () => {
     return (
         <div className='w-screen flex items-center justify-between bg-black min-h-10  p-1.5 z-10

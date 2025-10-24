@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from './components/navbar/Navbar'
+import Navbar from './features/navbar/Navbar'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Layout from './app/Layout'

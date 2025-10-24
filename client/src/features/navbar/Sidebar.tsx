@@ -2,8 +2,8 @@ import { useSidebarStore } from '@/stores/useSidebarStore'
 import React, { useState } from 'react'
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import ProfileIcon from './ProfileIcon';
-import ColumnDivider from '../ui/columnDivider';
-import Navlink from '../ui/navlink';
+import ColumnDivider from '../../components/ui/columnDivider';
+import Navlink from '../../components/ui/navlink';
 import { FaSignInAlt } from "react-icons/fa";
 import { RiAccountCircleLine } from "react-icons/ri";
 import { FaHome } from "react-icons/fa";
@@ -11,9 +11,50 @@ import { FaInfoCircle } from "react-icons/fa";
 import { FaPhoneAlt } from "react-icons/fa";
 import NavCancelIcon from './NavCancelIcon';
 import SidebarOverlay from './SidebarOverlay';
+import { useNavigate } from 'react-router';
+import { useAuthStore } from '@/stores/useAuthStore';
+import { useMutation } from '@tanstack/react-query';
 const Sidebar = () => {
     const enabled = useSidebarStore((state) => state.enabled);
-    const [loggedIn, setLoggedIn] = useState<boolean>(false);
+    const loggedIn = useAuthStore((state) => state.loggedIn);
+    const accessToken = useAuthStore((state) => state.accessToken);
+
+    const setAccessToken = useAuthStore((state) => state.setAccessToken);
+    const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
+
+    const navigate = useNavigate();
+
+    const { mutateAsync } = useMutation({
+        mutationKey: ['logout'],
+        mutationFn: async () => {
+            const path: string = `${import.meta.env.VITE_SERVER_PATH}/logout`;
+            const res = await fetch(path, {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`,
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const body = await res.json();
+
+            if (!res.ok) {
+                throw new Error(body.error || "Unknown error occured");
+            };
+        }
+    })
+
+    const onSignButton = async () => {
+        if (!loggedIn) {
+            navigate('/signup');
+            return;
+        }
+        console.log("LOGOUT!");
+        await mutateAsync();
+        setAccessToken('');
+        setLoggedIn(false);
+    }
 
     return (
         <AnimatePresence>
@@ -30,7 +71,7 @@ const Sidebar = () => {
                         >
                             <ProfileIcon variant='sidebar' username='Magstar' />
                             <ColumnDivider variant='thin' />
-                            <Navlink variant='sidebar' to={!loggedIn ? '' : '/signup'}>
+                            <Navlink variant='sidebar' onClick={() => onSignButton()}>
                                 <FaSignInAlt /> {!loggedIn ? 'Sign In' : 'Sign Out'}
                             </Navlink>
                             <Navlink variant='sidebar' to={'/profile'}>

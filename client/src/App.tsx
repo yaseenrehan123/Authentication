@@ -8,6 +8,7 @@ import SignupPage from './features/signup/SignupPage'
 import LoginPage from './features/login/LoginPage';
 import VerifyPage from './features/verify/VerifyPage';
 import ProfilePage from './features/profile/ProfilePage';
+import ForgotPasswordPage from './features/forgot-password/ForgotPasswordPage';
 
 const App = () => {
   const query = new QueryClient();
@@ -20,7 +21,8 @@ const App = () => {
         { path: 'signup', element: <SignupPage /> },
         { path: 'login', element: <LoginPage /> },
         { path: 'verify', element: <VerifyPage /> },
-        { path: 'profile', element: <ProfilePage /> }
+        { path: 'profile', element: <ProfilePage /> },
+        { path: 'forgot-password', element: <ForgotPasswordPage /> }
       ]
     }
   ])

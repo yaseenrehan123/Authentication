@@ -24,3 +24,7 @@ export const resendCodeSchema = z.object({
 export const editProfileSchema = z.object({
     username: z.string().min(8).max(15).optional()
 });
+
+export const forgotPasswordSchema = z.object({
+    email: z.email()
+});

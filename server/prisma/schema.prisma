@@ -15,14 +15,15 @@ datasource db {
 }
 
 model User {
-  id               String            @id @default(uuid())
-  username         String
-  email            String            @unique
-  password         String
-  verified         Boolean           @default(false)
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  verificationCode VerificationCode?
+  id                 String              @id @default(uuid())
+  username           String
+  email              String              @unique
+  password           String
+  verified           Boolean             @default(false)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  verificationCode   VerificationCode?
+  resetPasswordToken ResetPasswordToken?
 }
 
 model VerificationCode {
@@ -31,4 +32,12 @@ model VerificationCode {
   createdAt        DateTime @default(now())
   unverifiedUser   User?    @relation(fields: [unverifiedUserId], references: [id])
   unverifiedUserId String?  @unique
+}
+
+model ResetPasswordToken {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  userId    String   @unique
+  user      User?    @relation(fields: [userId], references: [id])
+  token     String
 }

@@ -137,6 +137,13 @@ exports.Prisma.VerificationCodeScalarFieldEnum = {
   unverifiedUserId: 'unverifiedUserId'
 };
 
+exports.Prisma.ResetPasswordTokenScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  userId: 'userId',
+  token: 'token'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -155,7 +162,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  VerificationCode: 'VerificationCode'
+  VerificationCode: 'VerificationCode',
+  ResetPasswordToken: 'ResetPasswordToken'
 };
 
 /**

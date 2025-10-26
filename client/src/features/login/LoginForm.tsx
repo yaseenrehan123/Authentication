@@ -76,10 +76,14 @@ const LoginForm = () => {
                 <Button type='submit' disabled={loginMutation.isPending}>
                     {loginMutation.isPending ? 'Loading...' : 'Submit'}
                 </Button>
+
                 <Message
                     variant={loginMutation.isError ? 'error' : loginMutation.isSuccess ? 'success' : 'default'}
                     disableOnContent='md'
                     content={message} />
+                <div className='text-purple-500 hover:text-purple-700 hover:cursor-pointer transition-all duration-150 active:scale-98'>
+                    Receive new code
+                </div>
             </form>
         </FormContainer>
     )

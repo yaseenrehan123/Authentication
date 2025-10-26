@@ -1,4 +1,4 @@
-import z from "zod";
+import z, { email } from "zod";
 export const signupSchema = z.object({
     username: z.string()
         .min(8, "Username must contain minimum 8 characters")
@@ -35,4 +35,7 @@ export const editProfileSchema = z.object({
     username: z.string()
         .min(8, "Username must contain minimum 8 characters")
         .max(15, "Username cant exceed more than 15 characters")
+});
+export const forgotPasswordSchema = z.object({
+    email: z.email("Invalid email")
 });

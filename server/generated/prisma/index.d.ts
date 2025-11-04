@@ -3344,7 +3344,7 @@ export namespace Prisma {
   export type ResetPasswordTokenGroupByOutputType = {
     id: string
     createdAt: Date
-    userId: string
+    userId: string | null
     token: string
     _count: ResetPasswordTokenCountAggregateOutputType | null
     _min: ResetPasswordTokenMinAggregateOutputType | null
@@ -3415,7 +3415,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       createdAt: Date
-      userId: string
+      userId: string | null
       token: string
     }, ExtArgs["result"]["resetPasswordToken"]>
     composites: {}
@@ -4530,7 +4530,7 @@ export namespace Prisma {
     NOT?: ResetPasswordTokenWhereInput | ResetPasswordTokenWhereInput[]
     id?: StringFilter<"ResetPasswordToken"> | string
     createdAt?: DateTimeFilter<"ResetPasswordToken"> | Date | string
-    userId?: StringFilter<"ResetPasswordToken"> | string
+    userId?: StringNullableFilter<"ResetPasswordToken"> | string | null
     token?: StringFilter<"ResetPasswordToken"> | string
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
@@ -4538,7 +4538,7 @@ export namespace Prisma {
   export type ResetPasswordTokenOrderByWithRelationInput = {
     id?: SortOrder
     createdAt?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     token?: SortOrder
     user?: UserOrderByWithRelationInput
   }
@@ -4557,7 +4557,7 @@ export namespace Prisma {
   export type ResetPasswordTokenOrderByWithAggregationInput = {
     id?: SortOrder
     createdAt?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     token?: SortOrder
     _count?: ResetPasswordTokenCountOrderByAggregateInput
     _max?: ResetPasswordTokenMaxOrderByAggregateInput
@@ -4570,7 +4570,7 @@ export namespace Prisma {
     NOT?: ResetPasswordTokenScalarWhereWithAggregatesInput | ResetPasswordTokenScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"ResetPasswordToken"> | string
     createdAt?: DateTimeWithAggregatesFilter<"ResetPasswordToken"> | Date | string
-    userId?: StringWithAggregatesFilter<"ResetPasswordToken"> | string
+    userId?: StringNullableWithAggregatesFilter<"ResetPasswordToken"> | string | null
     token?: StringWithAggregatesFilter<"ResetPasswordToken"> | string
   }
 
@@ -4710,7 +4710,7 @@ export namespace Prisma {
   export type ResetPasswordTokenUncheckedCreateInput = {
     id?: string
     createdAt?: Date | string
-    userId: string
+    userId?: string | null
     token: string
   }
 
@@ -4724,14 +4724,14 @@ export namespace Prisma {
   export type ResetPasswordTokenUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     token?: StringFieldUpdateOperationsInput | string
   }
 
   export type ResetPasswordTokenCreateManyInput = {
     id?: string
     createdAt?: Date | string
-    userId: string
+    userId?: string | null
     token: string
   }
 
@@ -4744,7 +4744,7 @@ export namespace Prisma {
   export type ResetPasswordTokenUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     token?: StringFieldUpdateOperationsInput | string
   }
 

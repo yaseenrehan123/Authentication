@@ -1,5 +1,5 @@
 import type { NavLinkProps as RouterNavlinkProps } from "react-router";
-import { loginSchema, editProfileSchema, signupSchema, verificationCodeSchema, verificationSchema, forgotPasswordSchema } from "./lib/validations";
+import { loginSchema, editProfileSchema, signupSchema, verificationCodeSchema, verificationSchema, forgotPasswordSchema, verifyPasswordResetTokenSchema, resetPasswordFormSchema, resetPasswordSchema } from "./lib/validations";
 import { z } from "zod";
 
 //GENERAL
@@ -103,3 +103,6 @@ export type VerificationFields = z.infer<typeof verificationSchema>
 export type VerifcationCode = z.infer<typeof verificationCodeSchema>
 export type EditProfileFormFields = z.infer<typeof editProfileSchema>
 export type ForgotPasswordFields = z.infer<typeof forgotPasswordSchema>
+export type VerifyPasswordResetTokenFields = z.infer<typeof verifyPasswordResetTokenSchema>
+export type ResetPasswordFormFields = z.infer<typeof resetPasswordFormSchema>
+export type ResetPasswordFields = z.infer<typeof resetPasswordSchema>

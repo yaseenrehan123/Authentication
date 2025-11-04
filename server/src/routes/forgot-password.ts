@@ -1,5 +1,7 @@
 import express from "express";
 import crypto from "crypto";
+import bcyrpt from "bcrypt";
+//import jwt from "jsonwebtoken";
 import { forgotPasswordSchema } from "../validations.js";
 import { sendMail } from "../nodemailer.js";
 import { PrismaClient } from "../../generated/prisma/index.js";
@@ -20,6 +22,10 @@ forgotPasswordRouter.post('/', async (req, res) => {
         const data = result.data!;
 
         const token: string = crypto.randomBytes(32).toString("hex");
+        const hashedToken: string = await bcyrpt.hash(token, 10);
+        /*const jwtToken: string = jwt.sign({ email: data.email }, process.env.RESET_PASSWORD_VERIFICATION_SECRET!, {
+            expiresIn: '30m'
+        });*/
         const resetUrl = `${process.env.CLIENT_URL}/reset-password?token=${token}`;
 
         const user = await prisma.user.findUnique({
@@ -38,12 +44,17 @@ forgotPasswordRouter.post('/', async (req, res) => {
             data: {
                 resetPasswordToken: {
                     create: {
-                        token: token
+                        token: hashedToken
                     }
                 }
             }
         });
 
+        res.cookie("resetEmail", data.email, {
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            maxAge: 30 * 60 * 1000
+        });
 
         await sendMail({
             subject: "Forgot password validation",
@@ -57,6 +68,7 @@ forgotPasswordRouter.post('/', async (req, res) => {
         });
     }
     catch (err) {
+        console.log("Error", err);
         return res.status(500).json({
             success: false,
             error: "Internal server error"

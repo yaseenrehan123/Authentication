@@ -9,6 +9,7 @@ import LoginPage from './features/login/LoginPage';
 import VerifyPage from './features/verify/VerifyPage';
 import ProfilePage from './features/profile/ProfilePage';
 import ForgotPasswordPage from './features/forgot-password/ForgotPasswordPage';
+import ResetPasswordPage from './features/reset-password/ResetPasswordPage';
 
 const App = () => {
   const query = new QueryClient();
@@ -22,7 +23,8 @@ const App = () => {
         { path: 'login', element: <LoginPage /> },
         { path: 'verify', element: <VerifyPage /> },
         { path: 'profile', element: <ProfilePage /> },
-        { path: 'forgot-password', element: <ForgotPasswordPage /> }
+        { path: 'forgot-password', element: <ForgotPasswordPage /> },
+        { path: 'reset-password', element: <ResetPasswordPage /> }
       ]
     }
   ])

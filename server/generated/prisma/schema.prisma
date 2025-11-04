@@ -37,7 +37,7 @@ model VerificationCode {
 model ResetPasswordToken {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
-  userId    String   @unique
+  userId    String?  @unique
   user      User?    @relation(fields: [userId], references: [id])
   token     String
 }

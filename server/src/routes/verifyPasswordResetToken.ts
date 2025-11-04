@@ -49,10 +49,6 @@ verifyPasswordResetTokenRouter.post('/', async (req, res) => {
             });
         };
 
-        await prisma.resetPasswordToken.delete({
-            where: { id: user.resetPasswordToken.id },
-        });
-
         return res.status(200).json({
             success: true
         });

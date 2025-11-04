@@ -56,6 +56,7 @@ export const resetPasswordFormSchema = z.object({
     path: ["confirmPassword"]
 });
 export const resetPasswordSchema = z.object({
+    token: z.string(),
     email: z.email(),
     password: z.string()
         .min(8, "Password must contain minimum 8 characters")

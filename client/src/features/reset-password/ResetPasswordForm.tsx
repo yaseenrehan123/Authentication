@@ -8,10 +8,19 @@ import { resetPasswordFormSchema } from '@/lib/validations'
 import type { ResetPasswordFields, ResetPasswordFormFields } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useSearchParams } from 'react-router-dom'
 
 const ResetPasswordForm = () => {
+    const [params, setParams] = useSearchParams();
+    const [token, setToken] = useState<string>('');
+
+    useEffect(() => {
+        const tokenValue: string = params.get('token') ?? '';
+        setToken(tokenValue)
+    }, [])
+
     const { handleSubmit, register, reset, formState: { errors } } = useForm<ResetPasswordFormFields>({
         resolver: zodResolver(resetPasswordFormSchema)
     });
@@ -34,11 +43,13 @@ const ResetPasswordForm = () => {
             if (!res.ok) {
                 throw new Error(body?.error || "Unknown error occured");
             }
-        }
+        },
+        onSuccess: () => reset()
     });
 
     const onSubmit = async (data: ResetPasswordFormFields) => {
         const obj: ResetPasswordFields = {
+            token: token,
             email: getCookie('resetEmail'),
             password: data.password,
             confirmPassword: data.confirmPassword
@@ -63,9 +74,11 @@ const ResetPasswordForm = () => {
                 <Button type='submit'>
                     Submit
                 </Button>
-                <Message variant={isSuccess ? 'success' : isPending ? 'loading' : isError ? 'error' : 'default'} disableOnContent='md'>
-                    {isSuccess ? 'Sucesss' : isPending ? 'Loading' : isError ? error.message : ''}
-                </Message>
+                <Message
+                    variant={isSuccess ? 'success' : isPending ? 'loading' : isError ? 'error' : 'default'}
+                    disableOnContent='md'
+                    content={isSuccess ? 'Sucesss' : isPending ? 'Loading' : isError ? error.message : ''} />
+
             </form>
         </FormContainer>
     )

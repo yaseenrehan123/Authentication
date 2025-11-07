@@ -26,7 +26,8 @@ const SignupForm = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(data),
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -46,7 +47,6 @@ const SignupForm = () => {
     });
     const onSubmit: SubmitHandler<SignupFormFields> = async (data) => {
         signupMutation.mutate(data);
-        sessionStorage.setItem("verifyEmail", data.email);
     };
     return (
         <FormContainer variant='dark'>

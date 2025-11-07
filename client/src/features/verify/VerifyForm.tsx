@@ -10,6 +10,7 @@ import { useMutation } from '@tanstack/react-query'
 import ResendCode from './ResendCode'
 import { useNavigate } from 'react-router'
 import { useAuthStore } from '@/stores/useAuthStore'
+import getCookie from '@/lib/getCookie'
 
 const VerifyForm = () => {
     const [message, setMessage] = useState<string>('');
@@ -24,7 +25,7 @@ const VerifyForm = () => {
         mutationKey: ['verify'],
         mutationFn: (async (data: VerifcationCode) => {
             const obj = {
-                email: sessionStorage.getItem("verifyEmail"),
+                email: getCookie("verifyEmail"),
                 verificationCode: data
             };
             const path: string = `${import.meta.env.VITE_SERVER_PATH}/verify`

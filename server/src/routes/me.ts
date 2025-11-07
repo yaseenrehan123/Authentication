@@ -23,7 +23,7 @@ meRouter.get('/', authenticateToken, async (req, res) => {
     });
 
     if (!user) {
-        res.status(400).json({
+        return res.status(400).json({
             succes: false,
             error: "User not found"
         })

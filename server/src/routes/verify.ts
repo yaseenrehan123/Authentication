@@ -68,6 +68,8 @@ verifyRouter.post('/', async (req, res) => {
             sameSite: 'lax'
         });
 
+        res.clearCookie('verifyEmail');
+
         return res.status(200).json({
             success: true,
             accessToken: accessToken

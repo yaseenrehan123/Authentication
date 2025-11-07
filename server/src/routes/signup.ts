@@ -42,6 +42,12 @@ signupRouter.post('/', async (req, res) => {
 
                 issueVerificationCode(user);
 
+                res.cookie('verifyEmail', user.email, {
+                    secure: process.env.NODE_ENV === "production",
+                    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+                    maxAge: 30 * 60 * 1000
+                });
+
                 return res.status(200).json({
                     success: true,
                     pendingVerification: true
@@ -66,6 +72,12 @@ signupRouter.post('/', async (req, res) => {
         issueVerificationCode(newUser);
 
         console.log(newUser);
+
+        res.cookie('verifyEmail', data.email, {
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            maxAge: 30 * 60 * 1000
+        });
 
         return res.status(200).json({
             success: true

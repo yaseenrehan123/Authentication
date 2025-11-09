@@ -48,6 +48,9 @@ const SignupForm = () => {
     const onSubmit: SubmitHandler<SignupFormFields> = async (data) => {
         signupMutation.mutate(data);
     };
+    const onNavigateLogin = () => {
+        navigate('/login')
+    };
     return (
         <FormContainer variant='dark'>
             <div className='text-white text-4xl font-bold'>
@@ -80,6 +83,11 @@ const SignupForm = () => {
                 disableOnContent='md'
                 content={message} />
 
+            <Message
+                content={'Already have an account?'}
+                className='text-purple-500 hover:text-purple-700 hover:cursor-pointer transition-all duration-150'
+                onClick={() => onNavigateLogin()}
+            />
         </FormContainer>
 
     )

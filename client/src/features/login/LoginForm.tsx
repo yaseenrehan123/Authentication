@@ -10,11 +10,13 @@ import { useMutation } from '@tanstack/react-query'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAuthStore } from '@/stores/useAuthStore'
+import { useNavigate } from 'react-router'
 
 const LoginForm = () => {
     const [message, setMessage] = useState<string>('');
     const setAccessToken = useAuthStore((state) => state.setAccessToken);
     const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
+    const navigate = useNavigate();
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm<LoginFormFields>({
         resolver: zodResolver(loginSchema)
@@ -58,6 +60,10 @@ const LoginForm = () => {
         loginMutation.mutate(data);
     };
 
+    const onNavigateSignup = () => {
+        navigate('/signup');
+    }
+
     return (
         <FormContainer variant='dark'>
             <div className='text-white text-4xl font-bold'>
@@ -81,9 +87,12 @@ const LoginForm = () => {
                     variant={loginMutation.isError ? 'error' : loginMutation.isSuccess ? 'success' : 'default'}
                     disableOnContent='md'
                     content={message} />
-                <div className='text-purple-500 hover:text-purple-700 hover:cursor-pointer transition-all duration-150 active:scale-98'>
-                    Receive new code
-                </div>
+
+                <Message
+                    content={'Create Account'}
+                    className='text-purple-500 hover:text-purple-700 hover:cursor-pointer transition-all duration-150'
+                    onClick={() => onNavigateSignup()}
+                />
             </form>
         </FormContainer>
     )

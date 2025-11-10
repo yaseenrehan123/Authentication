@@ -12,14 +12,14 @@ signupRouter.post('/', async (req, res) => {
     try {
         const result = signupSchema.safeParse(req.body);
         if (!result.success) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 error: result.error.message
             });
         }
         const data = result.data!;
         if (data.password !== data.confirmPassword) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 error: 'passwords not matching'
             })

@@ -18,7 +18,7 @@ const VerifyForm = () => {
     const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
 
     const navigate = useNavigate();
-    const { register, reset, handleSubmit, formState: { errors } } = useForm<VerificationFields>({
+    const { register, reset, handleSubmit, setValue, formState: { errors } } = useForm<VerificationFields>({
         resolver: zodResolver(verificationSchema)
     });
     const { isPending, isError, isSuccess, mutate } = useMutation({
@@ -75,6 +75,8 @@ const VerifyForm = () => {
             // move to next input by DOM traversal
             (e.target.nextElementSibling as HTMLInputElement)?.focus()
         }
+
+        console.log("HANDLE CHANGE VALUE:", value);
     }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, idx: number) => {
@@ -95,7 +97,12 @@ const VerifyForm = () => {
 
         // fill inputs from current index onward
         for (let i = 0; i < pasted.length && idx + i < inputs.length; i++) {
-            inputs[idx + i].value = pasted[i];
+            const input = inputs[idx + i];
+            input.value = pasted[i];
+
+            console.log("OTP FIELD INDEX: ", idx + i, "VALUE:", input.value);
+
+            setValue(pinFields[idx + i], Number(pasted[i]), { shouldValidate: true });
         }
 
         // focus the next empty input (if any)

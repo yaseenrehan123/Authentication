@@ -46,8 +46,10 @@ const Sidebar = () => {
     })
 
     const onSignButton = async () => {
+        console.log("LOGGED:", loggedIn);
         if (!loggedIn) {
-            navigate('/signup');
+            console.log("NAVIGATION CODE RAN!");
+            navigate('/login');
             return;
         }
         console.log("LOGOUT!");
@@ -71,7 +73,7 @@ const Sidebar = () => {
                         >
                             <ProfileIcon variant='sidebar' username='Magstar' />
                             <ColumnDivider variant='thin' />
-                            <Navlink variant='sidebar' onClick={() => onSignButton()}>
+                            <Navlink variant='sidebar' onClick={() => onSignButton()} navigateRoute={false}>
                                 <FaSignInAlt /> {!loggedIn ? 'Sign In' : 'Sign Out'}
                             </Navlink>
                             <Navlink variant='sidebar' to={'/profile'}>

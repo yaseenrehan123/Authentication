@@ -4,9 +4,9 @@ import { cva } from 'class-variance-authority'
 import React from 'react'
 import { NavLink } from 'react-router'
 
-const Navlink = ({ variant, className, children, to = '', ...props }: NavlinkProps) => {
+const Navlink = ({ variant, className, children, to = '', navigateRoute = true, ...props }: NavlinkProps) => {
     return (
-        <NavLink to={to}>
+        <NavLink to={navigateRoute ? to : {}}>
             <div className={cn(variants({ variant }), className)} {...props}>
                 {children}
             </div>

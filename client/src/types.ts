@@ -35,6 +35,7 @@ export type ColumnDividerProps = React.HTMLAttributes<HTMLDivElement> & {
 }
 export type NavlinkProps = React.HTMLAttributes<HTMLDivElement> & Partial<RouterNavlinkProps> & {
     variant?: 'mainbar' | 'sidebar',
+    navigateRoute?: boolean
 }
 export type FormFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
     variant?: 'default' | 'small' | 'large',

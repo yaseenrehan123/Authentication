@@ -1,0 +1,43 @@
+import express from "express";
+import authenticateToken from "../middleware/authenticateToken.js";
+import { PrismaClient } from "../../generated/prisma/index.js";
+
+const deleteAccountRouter = express.Router();
+const prisma = new PrismaClient();
+
+deleteAccountRouter.post('/', authenticateToken, async (req, res) => {
+    const decoded = (req as any).user;
+
+    const user = await prisma.user.findUnique({
+        where: { id: decoded.id }
+    });
+
+    if (!user) {
+        return res.status(400).json({
+            success: false,
+            error: "User not found"
+        });
+    }
+
+    res.clearCookie('hasRefreshToken', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax'
+    });
+
+    res.clearCookie('refreshToken', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax'
+    });
+
+    await prisma.user.delete({
+        where: { id: user.id }
+    });
+
+    return res.status(200).json({
+        success: true
+    });
+});
+
+export default deleteAccountRouter;

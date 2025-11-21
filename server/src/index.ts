@@ -15,6 +15,7 @@ import logoutRouter from "./routes/logout.js";
 import forgotPasswordRouter from "./routes/forgot-password.js";
 import verifyPasswordResetTokenRouter from "./routes/verifyPasswordResetToken.js";
 import resetPasswordRouter from "./routes/resetPassword.js";
+import deleteAccountRouter from "./routes/delete-account.js";
 const app = express();
 const PORT = 8081;
 const prisma = new PrismaClient();
@@ -58,4 +59,5 @@ async function main() {
     app.use('/forgot-password', forgotPasswordRouter);
     app.use('/verify-password-reset', verifyPasswordResetTokenRouter);
     app.use('/reset-password', resetPasswordRouter);
+    app.use('/delete-account', deleteAccountRouter);
 }

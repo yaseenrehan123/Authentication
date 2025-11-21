@@ -14,6 +14,8 @@ import SidebarOverlay from './SidebarOverlay';
 import { useNavigate } from 'react-router';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useMutation } from '@tanstack/react-query';
+import { MdDelete } from "react-icons/md";
+import useDeleteAccountConfirmationStore from '@/stores/useDeleteAccountConfirmationStore';
 const Sidebar = () => {
     const enabled = useSidebarStore((state) => state.enabled);
     const loggedIn = useAuthStore((state) => state.loggedIn);
@@ -21,6 +23,7 @@ const Sidebar = () => {
 
     const setAccessToken = useAuthStore((state) => state.setAccessToken);
     const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
+    const setEnabled = useDeleteAccountConfirmationStore((state) => state.setEnabled);
 
     const navigate = useNavigate();
 
@@ -58,6 +61,10 @@ const Sidebar = () => {
         setLoggedIn(false);
     }
 
+    const onDeleteAccountButton = () => {
+        setEnabled(true);
+    }
+
     return (
         <AnimatePresence>
             {enabled && (
@@ -89,6 +96,10 @@ const Sidebar = () => {
                             <Navlink variant='sidebar' to={'/contact'}>
                                 <FaPhoneAlt />Contact
                             </Navlink>
+                            {loggedIn && <Navlink variant='sidebar' navigateRoute={false} className={'gap-2'}
+                                onClick={onDeleteAccountButton}>
+                                <MdDelete className='text-red-500' /> Delete Account
+                            </Navlink>}
                             <NavCancelIcon />
                         </motion.div>
                     </MotionConfig>

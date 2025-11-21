@@ -68,4 +68,11 @@ export const resetPasswordSchema = z.object({
 }).refine((data) => data.password === data.confirmPassword, {
     message: "Passwords must match",
     path: ["confirmPassword"]
-})
+});
+
+export const deleteAccountConfirmationSchema = z.object({
+    username: z.string()
+        .min(8, "Username must contain minimum 8 characters")
+        .max(15, "Username cant exceed more than 15 characters")
+});
+

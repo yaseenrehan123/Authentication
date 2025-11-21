@@ -5,7 +5,7 @@ const logoutRouter = express.Router();
 
 logoutRouter.post('/', authenticateToken, (req, res) => {
     try {
-        const decoded = (req as any).user;
+        //const decoded = (req as any).user;
 
         res.clearCookie('hasRefreshToken', {
             httpOnly: true,

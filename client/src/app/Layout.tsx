@@ -4,6 +4,7 @@ import Navbar from '../features/navbar/Navbar'
 import useAutoAuth from '@/hooks/useAutoAuth'
 import { useAuthStore } from '@/stores/useAuthStore'
 import useFetchProfile from '@/hooks/useFetchProfile'
+import DeleteAccountConfirmation from '@/features/delete-account-popup/DeleteAccountConfirmation'
 
 const Layout = () => {
     useAutoAuth();
@@ -21,6 +22,7 @@ const Layout = () => {
         <div className='p-0 m-0 box-border'>
             <div className='w-screen h-screen flex items-center flex-col pt-2 pb-2 bg-neutral-900'>
                 <Navbar />
+                <DeleteAccountConfirmation />
                 <Outlet />
             </div>
         </div>

@@ -64,6 +64,10 @@ const LoginForm = () => {
         navigate('/signup');
     }
 
+    const onNavigateForgotPassword = () => {
+        navigate('/forgot-password');
+    }
+
     return (
         <FormContainer variant='dark'>
             <div className='text-white text-4xl font-bold'>
@@ -87,12 +91,19 @@ const LoginForm = () => {
                     variant={loginMutation.isError ? 'error' : loginMutation.isSuccess ? 'success' : 'default'}
                     disableOnContent='md'
                     content={message} />
+                <Alignment className='flex items-center justify-around flex-row w-full' gap='lg'>
+                    <Message
+                        content={'Dont have an Account?'}
+                        className='text-purple-500 hover:text-purple-700 hover:cursor-pointer transition-all duration-150'
+                        onClick={onNavigateSignup}
+                    />
+                    <Message
+                        content={'Forgot password?'}
+                        className='text-purple-500 hover:text-purple-700 hover:cursor-pointer transition-all duration-150'
+                        onClick={onNavigateForgotPassword}
+                    />
+                </Alignment>
 
-                <Message
-                    content={'Create Account'}
-                    className='text-purple-500 hover:text-purple-700 hover:cursor-pointer transition-all duration-150'
-                    onClick={() => onNavigateSignup()}
-                />
             </form>
         </FormContainer>
     )

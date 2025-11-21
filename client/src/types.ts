@@ -1,5 +1,5 @@
 import type { NavLinkProps as RouterNavlinkProps } from "react-router";
-import { loginSchema, editProfileSchema, signupSchema, verificationCodeSchema, verificationSchema, forgotPasswordSchema, verifyPasswordResetTokenSchema, resetPasswordFormSchema, resetPasswordSchema } from "./lib/validations";
+import { loginSchema, editProfileSchema, signupSchema, verificationCodeSchema, verificationSchema, forgotPasswordSchema, verifyPasswordResetTokenSchema, resetPasswordFormSchema, resetPasswordSchema, deleteAccountConfirmationSchema } from "./lib/validations";
 import { z } from "zod";
 
 //GENERAL
@@ -97,6 +97,10 @@ export type EditProfileFormStore = EditProfileFormFields & {
     clearEditing: () => void,
     confirmEditing: () => void
 }
+export type DeleteAccountConfirmationStore = {
+    enabled: boolean,
+    setEnabled: (newVal: boolean) => void
+}
 //INFERS
 export type SignupFormFields = z.infer<typeof signupSchema>
 export type LoginFormFields = z.infer<typeof loginSchema>
@@ -107,3 +111,4 @@ export type ForgotPasswordFields = z.infer<typeof forgotPasswordSchema>
 export type VerifyPasswordResetTokenFields = z.infer<typeof verifyPasswordResetTokenSchema>
 export type ResetPasswordFormFields = z.infer<typeof resetPasswordFormSchema>
 export type ResetPasswordFields = z.infer<typeof resetPasswordSchema>
+export type DeleteAccountConfirmationFields = z.infer<typeof deleteAccountConfirmationSchema>

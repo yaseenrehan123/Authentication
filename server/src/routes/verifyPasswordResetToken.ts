@@ -2,10 +2,9 @@ import express from "express";
 import bcrypt from "bcrypt";
 //import jwt from "jsonwebtoken";
 import { verifyPasswordResetTokenSchema } from "../validations.js";
-import { PrismaClient } from "../../generated/prisma/index.js";
+import prisma from "../db.js";
 
 const verifyPasswordResetTokenRouter = express.Router();
-const prisma = new PrismaClient();
 
 verifyPasswordResetTokenRouter.post('/', async (req, res) => {
     try {

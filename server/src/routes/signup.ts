@@ -1,12 +1,11 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import crypto from "crypto";
-import { PrismaClient } from "../../generated/prisma/index.js";
+//import crypto from "crypto";
+import prisma from "../db.js";
 import { signupSchema } from "../validations.js";
 import issueVerificationCode from "../utils/issueVerificationCode.js";
 
 const signupRouter = express.Router();
-const prisma = new PrismaClient();
 
 signupRouter.post('/', async (req, res) => {
     try {

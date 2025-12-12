@@ -160,6 +160,10 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -186,8 +190,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id                 String              @id @default(uuid())\n  username           String\n  email              String              @unique\n  password           String\n  verified           Boolean             @default(false)\n  createdAt          DateTime            @default(now())\n  updatedAt          DateTime            @updatedAt\n  verificationCode   VerificationCode?\n  resetPasswordToken ResetPasswordToken?\n}\n\nmodel VerificationCode {\n  id               String   @id @default(uuid())\n  verificationCode String\n  createdAt        DateTime @default(now())\n  unverifiedUser   User?    @relation(fields: [unverifiedUserId], references: [id])\n  unverifiedUserId String?  @unique\n}\n\nmodel ResetPasswordToken {\n  id        String   @id @default(uuid())\n  createdAt DateTime @default(now())\n  userId    String?  @unique\n  user      User?    @relation(fields: [userId], references: [id])\n  token     String\n}\n",
-  "inlineSchemaHash": "74fadebd34b133b6dd61b301f55cda834ccdabcd864cc04c23248fe8d52267dc",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../generated/prisma\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider  = \"postgresql\"\n  url       = env(\"DATABASE_URL\")\n  directUrl = env(\"DIRECT_URL\")\n}\n\nmodel User {\n  id                 String              @id @default(uuid())\n  username           String\n  email              String              @unique\n  password           String\n  verified           Boolean             @default(false)\n  createdAt          DateTime            @default(now())\n  updatedAt          DateTime            @updatedAt\n  verificationCode   VerificationCode?\n  resetPasswordToken ResetPasswordToken?\n}\n\nmodel VerificationCode {\n  id               String   @id @default(uuid())\n  verificationCode String\n  createdAt        DateTime @default(now())\n  unverifiedUser   User?    @relation(fields: [unverifiedUserId], references: [id])\n  unverifiedUserId String?  @unique\n}\n\nmodel ResetPasswordToken {\n  id        String   @id @default(uuid())\n  createdAt DateTime @default(now())\n  userId    String?  @unique\n  user      User?    @relation(fields: [userId], references: [id])\n  token     String\n}\n",
+  "inlineSchemaHash": "a717c13ed1d7b94543ecdd844677150052df34d1c3efaefa26f972d974d58204",
   "copyEngine": true
 }
 
@@ -228,6 +232,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "generated/prisma/query_engine-windows.dll.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "generated/prisma/schema.prisma")

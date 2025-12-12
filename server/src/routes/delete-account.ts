@@ -1,9 +1,8 @@
 import express from "express";
 import authenticateToken from "../middleware/authenticateToken.js";
-import { PrismaClient } from "../../generated/prisma/index.js";
+import prisma from "../db.js";
 
 const deleteAccountRouter = express.Router();
-const prisma = new PrismaClient();
 
 deleteAccountRouter.post('/', authenticateToken, async (req, res) => {
     const decoded = (req as any).user;

@@ -1,10 +1,9 @@
 import express from "express";
 import authenticateToken from "../middleware/authenticateToken.js";
-import { PrismaClient } from "../../generated/prisma/index.js";
+import prisma from "../db.js";
 import { editProfileSchema } from "../validations.js";
 
 const editProfileRouter = express.Router();
-const prisma = new PrismaClient();
 
 editProfileRouter.post('/', authenticateToken, async (req, res) => {
     try {

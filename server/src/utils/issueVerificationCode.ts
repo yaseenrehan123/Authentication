@@ -1,10 +1,8 @@
 import { User } from "../../generated/prisma/index.js";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
-import { PrismaClient } from "../../generated/prisma/client.js";
+import prisma from "../db.js";
 import { sendMail } from "../resend.js";
-
-const prisma = new PrismaClient();
 
 async function issueVerificationCode(user: User) {
     const code = crypto.randomInt(100000, 999999);

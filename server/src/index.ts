@@ -2,8 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import { PrismaClient } from "../generated/prisma/client.js";
-import { initNodemailer } from "./nodemailer.js";
+import prisma from "./db.js";
 import signupRouter from "./routes/signup.js";
 import loginRouter from "./routes/login.js";
 import refreshRouter from "./routes/refresh.js";
@@ -19,7 +18,6 @@ import deleteAccountRouter from "./routes/delete-account.js";
 import { initResend } from "./resend.js";
 const app = express();
 const PORT = 8081;
-const prisma = new PrismaClient();
 
 main()
     .catch((e: Error) => {

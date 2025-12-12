@@ -1,10 +1,9 @@
 import express from "express";
 import { resendCodeSchema } from "../validations.js";
-import { PrismaClient } from "../../generated/prisma/index.js";
 import issueVerificationCode from "../utils/issueVerificationCode.js";
+import prisma from "../db.js";
 
 const resendCodeRouter = express.Router();
-const prisma = new PrismaClient();
 
 resendCodeRouter.post('/', async (req, res) => {
     try {

@@ -1,13 +1,12 @@
 import express from "express";
 import bycrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { PrismaClient } from "../../generated/prisma/client.js";
+import prisma from "../db.js";
 import { loginSchema } from "../validations.js";
 
 import generateAccessToken from "../utils/generateAccessToken.js";
 
 const loginRouter = express.Router();
-const prisma = new PrismaClient();
 
 loginRouter.post('/', async (req, res) => {
     try {

@@ -1,10 +1,9 @@
-import { PrismaClient } from "../../generated/prisma/index.js";
+import prisma from "../db.js";
 import express from "express";
 import { resetPasswordSchema } from "../validations.js";
 import bcrypt from "bcrypt";
 
 const resetPasswordRouter = express.Router();
-const prisma = new PrismaClient();
 
 resetPasswordRouter.post('/', async (req, res) => {
     const result = resetPasswordSchema.safeParse(req.body);

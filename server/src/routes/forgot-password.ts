@@ -4,11 +4,9 @@ import bcyrpt from "bcrypt";
 //import jwt from "jsonwebtoken";
 import { forgotPasswordSchema } from "../validations.js";
 import { sendMail } from "../resend.js";
-import { PrismaClient } from "../../generated/prisma/index.js";
+import prisma from "../db.js";
 
 const forgotPasswordRouter = express.Router();
-
-const prisma = new PrismaClient();
 
 forgotPasswordRouter.post('/', async (req, res) => {
     try {

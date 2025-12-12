@@ -2,7 +2,7 @@ import { User } from "../../generated/prisma/index.js";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
 import { PrismaClient } from "../../generated/prisma/client.js";
-import { sendMail } from "../nodemailer.js";
+import { sendMail } from "../resend.js";
 
 const prisma = new PrismaClient();
 
@@ -23,7 +23,6 @@ async function issueVerificationCode(user: User) {
 
     await sendMail({
         subject: 'Verify your email address',
-        email: process.env.MY_GOOGLE_EMAIL!,
         message: `
                 <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px;">
                 <h2 style="color: #333;">Verify your email address</h2>

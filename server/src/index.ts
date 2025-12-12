@@ -16,10 +16,10 @@ import forgotPasswordRouter from "./routes/forgot-password.js";
 import verifyPasswordResetTokenRouter from "./routes/verifyPasswordResetToken.js";
 import resetPasswordRouter from "./routes/resetPassword.js";
 import deleteAccountRouter from "./routes/delete-account.js";
+import { initResend } from "./resend.js";
 const app = express();
 const PORT = 8081;
 const prisma = new PrismaClient();
-initNodemailer();
 
 main()
     .catch((e: Error) => {
@@ -47,6 +47,9 @@ async function main() {
             console.log(`It's alive on http://localhost:${PORT}`);
         }
     );
+
+    initResend();
+    //initNodemailer();
 
     app.use('/signup', signupRouter);
     app.use('/login', loginRouter);

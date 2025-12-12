@@ -3,7 +3,7 @@ import crypto from "crypto";
 import bcyrpt from "bcrypt";
 //import jwt from "jsonwebtoken";
 import { forgotPasswordSchema } from "../validations.js";
-import { sendMail } from "../nodemailer.js";
+import { sendMail } from "../resend.js";
 import { PrismaClient } from "../../generated/prisma/index.js";
 
 const forgotPasswordRouter = express.Router();
@@ -58,7 +58,6 @@ forgotPasswordRouter.post('/', async (req, res) => {
 
         await sendMail({
             subject: "Forgot password validation",
-            email: process.env.MY_GOOGLE_EMAIL!,
             message: `Click the link to  reset password: ${resetUrl}`,
             address: data.email
         });

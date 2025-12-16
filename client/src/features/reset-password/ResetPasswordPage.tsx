@@ -12,14 +12,14 @@ const ResetPasswordPage = () => {
         const tokenValue: string = params.get('token') ?? '';
         setToken(tokenValue)
         console.log("RESET PASSWORD TOKEN:", tokenValue);
-        console.log("RESET EMAIL COOKIE:", getCookie("resetEmail"));
+        console.log("RESET EMAIL COOKIE:", localStorage.getItem("resetEmail"));
     }, []);
 
     useEffect(() => {
         if (!token) return;
         const data: VerifyPasswordResetTokenFields = {
             token: token,
-            email: getCookie("resetEmail")
+            email: localStorage.getItem("resetEmail") ?? ""
         };
         mutateAsync(data);
     }, [token]);

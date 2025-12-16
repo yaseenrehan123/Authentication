@@ -17,7 +17,7 @@ import resetPasswordRouter from "./routes/resetPassword.js";
 import deleteAccountRouter from "./routes/delete-account.js";
 import { initResend } from "./resend.js";
 const app = express();
-const PORT = 8081;
+const PORT = process.env.PORT || 8081;
 
 main()
     .catch((e: Error) => {

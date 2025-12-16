@@ -35,6 +35,10 @@ const ForgotPasswordForm = () => {
             if (!res.ok) {
                 throw new Error(body.error || "Unknown error occured")
             }
+
+            const resetEmail: string = data.email;
+            localStorage.setItem("resetEmail", resetEmail);
+            console.log("RESET EMAIL:", resetEmail);
         },
         onSuccess: () => {
             reset();

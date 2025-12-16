@@ -35,6 +35,12 @@ const SignupForm = () => {
             if (!res.ok) {
                 throw new Error(body.error || "Unknown error occured");
             }
+
+            const verifyEmail = data.email;
+            localStorage.setItem("verifyEmail", verifyEmail);
+            console.log("VERIFY EMAIL:", verifyEmail);
+
+            return body;
         },
         onSuccess: () => {
             reset()

@@ -24,10 +24,12 @@ const VerifyForm = () => {
     const { isPending, isError, isSuccess, mutate } = useMutation({
         mutationKey: ['verify'],
         mutationFn: (async (data: VerifcationCode) => {
+            const retrievedVerifyEmail: string = localStorage.getItem("verifyEmail") ?? "";
             const obj = {
-                email: getCookie("verifyEmail"),
+                email: retrievedVerifyEmail,
                 verificationCode: data
             };
+            console.log("RETRIEVED VERIFY EMAIL:", retrievedVerifyEmail);
             const path: string = `${import.meta.env.VITE_SERVER_PATH}/verify`
             const res = await fetch(path, {
                 method: "POST",

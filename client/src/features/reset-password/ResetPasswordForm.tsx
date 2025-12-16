@@ -50,7 +50,7 @@ const ResetPasswordForm = () => {
     const onSubmit = async (data: ResetPasswordFormFields) => {
         const obj: ResetPasswordFields = {
             token: token,
-            email: getCookie('resetEmail'),
+            email: localStorage.getItem("resetEmail") ?? "",
             password: data.password,
             confirmPassword: data.confirmPassword
         };

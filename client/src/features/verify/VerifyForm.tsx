@@ -10,12 +10,13 @@ import { useMutation } from '@tanstack/react-query'
 import ResendCode from './ResendCode'
 import { useNavigate } from 'react-router'
 import { useAuthStore } from '@/stores/useAuthStore'
-import getCookie from '@/lib/getCookie'
+//import getCookie from '@/lib/getCookie'
 
 const VerifyForm = () => {
     const [message, setMessage] = useState<string>('');
     const setAccessToken = useAuthStore((state) => state.setAccessToken);
     const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
+    const setRefreshToken = useAuthStore((state) => state.setRefreshToken);
 
     const navigate = useNavigate();
     const { register, reset, handleSubmit, setValue, formState: { errors } } = useForm<VerificationFields>({
@@ -47,11 +48,16 @@ const VerifyForm = () => {
             };
 
             const accessToken: string = body?.accessToken;
+            const refreshToken: string = body?.refreshToken;
             if (accessToken) {
-                console.log("ACCESS TOKEN:", accessToken);
+                //console.log("ACCESS TOKEN:", accessToken);
                 setAccessToken(accessToken);
                 setLoggedIn(true);
             };
+            if (refreshToken) {
+                //console.log("REFRESH TOKEN:", refreshToken);
+                setRefreshToken(refreshToken);
+            }
 
         }),
         onSuccess: () => {

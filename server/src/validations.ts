@@ -43,3 +43,7 @@ export const resetPasswordSchema = z.object({
     message: "Passwords must match",
     path: ['confirmPassword']
 });
+
+export const refreshRouterSchema = z.object({
+    refreshToken: z.string()
+});

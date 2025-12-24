@@ -14,7 +14,7 @@ const Layout = () => {
 
     useEffect(() => {
         console.log("LOGGED IN: ", loggedIn);
-        console.log("ACCESS TOKEN:", accessToken);
+        //console.log("ACCESS TOKEN:", accessToken);
 
     }, [loggedIn, accessToken]);
 

@@ -75,7 +75,9 @@ export type AuthStore = {
     accessToken: string,
     setAccessToken: (newVal: string) => void,
     loggedIn: boolean,
-    setLoggedIn: (newVal: boolean) => void
+    setLoggedIn: (newVal: boolean) => void,
+    refreshToken: string,
+    setRefreshToken: (newVal: string) => void
 }
 export type ProfileStore = {
     id: string,

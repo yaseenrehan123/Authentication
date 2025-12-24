@@ -1,11 +1,23 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import generateAccessToken from "../utils/generateAccessToken.js";
+import { refreshRouterSchema } from "../validations.js";
 
 const refreshRouter = express.Router();
 
 refreshRouter.post('/', (req, res) => {
-    const refreshToken = req.cookies?.refreshToken;
+    const result = refreshRouterSchema.safeParse(req.body);
+
+    if (result.error) {
+        return res.status(400).json({
+            success: false,
+            error: result.error.message
+        });
+    };
+
+    const data = result.data!;
+    const refreshToken = data.refreshToken;
+
     if (!refreshToken) {
         return res.status(401).json({
             success: false,

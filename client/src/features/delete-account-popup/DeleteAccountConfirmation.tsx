@@ -22,6 +22,7 @@ const DeleteAccountConfirmation = () => {
     const setEnabled = useDeleteAccountConfirmationStore((state) => state.setEnabled);
     const username = useProfileStore((state) => state.username);
     const accessToken = useAuthStore((state) => state.accessToken);
+    const refreshToken = useAuthStore((state) => state.refreshToken);
 
     const { handleSubmit, register, reset, watch } = useForm<DeleteAccountConfirmationFields>({
         resolver: zodResolver(deleteAccountConfirmationSchema)
@@ -67,7 +68,7 @@ const DeleteAccountConfirmation = () => {
     }*/
 
     const onSubmit = async () => {
-        if (!document.cookie.includes("hasRefreshToken")) return;
+        if (!refreshToken) return;
         if (!accessToken || isTokenExpired(accessToken)) {
             await mutateAsync();
         };

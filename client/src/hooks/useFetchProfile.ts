@@ -10,6 +10,7 @@ function useFetchProfile() {
 
     const loggedIn = useAuthStore((state) => state.loggedIn);
     const accessToken = useAuthStore((state) => state.accessToken);
+    const refreshToken = useAuthStore((state) => state.refreshToken);
 
     const setId = useProfileStore((state) => state.setId);
     const setUsername = useProfileStore((state) => state.setUsername);
@@ -45,7 +46,7 @@ function useFetchProfile() {
 
     useEffect(() => {
         const ensureToken = async () => {
-            if (!document.cookie.includes("hasRefreshToken")) return;
+            if (!refreshToken) return;
             if (!accessToken || isTokenExpired(accessToken)) {
                 await mutateAsync();
             };

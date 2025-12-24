@@ -2,6 +2,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
 
 function useRefreshAccessToken() {
+    const refreshToken = useAuthStore((state) => state.refreshToken);
     const setAccessToken = useAuthStore((state => state.setAccessToken));
     const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
 
@@ -9,12 +10,16 @@ function useRefreshAccessToken() {
         mutationKey: ['refresh'],
         mutationFn: async () => {
             const path: string = `${import.meta.env.VITE_SERVER_PATH}/refresh`;
+            const content = {
+                refreshToken: refreshToken
+            }
             const res = await fetch(path, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                credentials: "include"
+                credentials: "include",
+                body: JSON.stringify(content)
             });
 
             const body = await res.json();

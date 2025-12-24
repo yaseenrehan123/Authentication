@@ -18,6 +18,7 @@ import { editProfileSchema } from '@/lib/validations';
 import Message from '@/components/ui/message';
 const ProfileDetails = () => {
     const accessToken = useAuthStore((state) => state.accessToken);
+    const refreshToken = useAuthStore((state) => state.refreshToken);
 
     const id = useProfileStore((state) => state.id);
     const email = useProfileStore((state) => state.email);
@@ -61,7 +62,7 @@ const ProfileDetails = () => {
         //console.log("PROFILE DETAILS HANDLE SUBMIT RAN!")
         const data = confirmEditing();
         const ensureToken = async () => {
-            if (!document.cookie.includes("hasRefreshToken")) return;
+            if (!refreshToken) return;
             if (!accessToken || isTokenExpired(accessToken)) {
                 await mutateAsync();
             };

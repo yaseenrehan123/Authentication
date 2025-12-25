@@ -23,6 +23,7 @@ const Sidebar = () => {
 
     const setAccessToken = useAuthStore((state) => state.setAccessToken);
     const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
+    const setRefreshToken = useAuthStore((state) => state.setRefreshToken);
     const setEnabled = useDeleteAccountConfirmationStore((state) => state.setEnabled);
 
     const navigate = useNavigate();
@@ -45,6 +46,11 @@ const Sidebar = () => {
             if (!res.ok) {
                 throw new Error(body.error || "Unknown error occured");
             };
+        },
+        onSuccess: () => {
+            setAccessToken('');
+            setLoggedIn(false);
+            setRefreshToken("")
         }
     })
 
@@ -57,8 +63,6 @@ const Sidebar = () => {
         }
         console.log("LOGOUT!");
         await mutateAsync();
-        setAccessToken('');
-        setLoggedIn(false);
     }
 
     const onDeleteAccountButton = () => {

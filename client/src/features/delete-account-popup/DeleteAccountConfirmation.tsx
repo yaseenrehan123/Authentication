@@ -14,7 +14,6 @@ import useRefreshAccessToken from '@/hooks/useRefreshAccessToken';
 import isTokenExpired from '@/lib/isTokenExpired';
 
 const DeleteAccountConfirmation = () => {
-    //const [confirmationValue, setConfirmationValue] = useState<string>('');
     const [confirmed, setConfirmed] = useState<boolean>(false);
     const [message, setMessage] = useState<string>('');
 
@@ -23,7 +22,9 @@ const DeleteAccountConfirmation = () => {
     const username = useProfileStore((state) => state.username);
     const accessToken = useAuthStore((state) => state.accessToken);
     const refreshToken = useAuthStore((state) => state.refreshToken);
-
+    const setAccessToken = useAuthStore((state) => state.setAccessToken);
+    const setRefreshToken = useAuthStore((state) => state.setRefreshToken);
+    const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
     const { handleSubmit, register, reset, watch } = useForm<DeleteAccountConfirmationFields>({
         resolver: zodResolver(deleteAccountConfirmationSchema)
     });
@@ -53,19 +54,15 @@ const DeleteAccountConfirmation = () => {
             setMessage("Success");
             reset();
             setEnabled(false);
+            setAccessToken("");
+            setRefreshToken("");
+            setLoggedIn(false);
 
         },
         onError: (e: Error) => {
             setMessage(e.message)
         }
     });
-
-    /*const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newVal: string = e.currentTarget.value;
-        //setConfirmationValue(newVal);
-        console.log("NEW CONFIRMATION VAL:", newVal);
-
-    }*/
 
     const onSubmit = async () => {
         if (!refreshToken) return;

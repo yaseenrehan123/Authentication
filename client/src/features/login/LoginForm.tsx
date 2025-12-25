@@ -16,6 +16,8 @@ const LoginForm = () => {
     const [message, setMessage] = useState<string>('');
     const setAccessToken = useAuthStore((state) => state.setAccessToken);
     const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
+    const setRefreshToken = useAuthStore((state) => state.setRefreshToken);
+
     const navigate = useNavigate();
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm<LoginFormFields>({
@@ -42,9 +44,14 @@ const LoginForm = () => {
             }
 
             const accessToken: string = body?.accessToken;
+            const refreshToken: string = body?.refreshToken;
+
             if (accessToken) {
                 setAccessToken(accessToken);
                 setLoggedIn(true);
+            };
+            if (refreshToken) {
+                setRefreshToken(refreshToken)
             }
         },
         onSuccess: () => {

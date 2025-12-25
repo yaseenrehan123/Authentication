@@ -11,10 +11,12 @@ const Layout = () => {
     useFetchProfile();
     const loggedIn = useAuthStore((state) => state.loggedIn);
     const accessToken = useAuthStore((state) => state.accessToken);
+    const refreshToken = useAuthStore((state) => state.refreshToken);
 
     useEffect(() => {
         console.log("LOGGED IN: ", loggedIn);
-        //console.log("ACCESS TOKEN:", accessToken);
+        console.log("ACCESS TOKEN:", accessToken);
+        console.log("REFRESH TOKEN:", refreshToken);
 
     }, [loggedIn, accessToken]);
 

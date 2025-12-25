@@ -48,12 +48,6 @@ forgotPasswordRouter.post('/', async (req, res) => {
             }
         });
 
-        /*res.cookie("resetEmail", data.email, {
-            secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-            maxAge: 30 * 60 * 1000
-        });*/
-
         await sendMail({
             subject: "Forgot password validation",
             message: `Click the link to  reset password: ${resetUrl}`,

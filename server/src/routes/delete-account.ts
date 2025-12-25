@@ -18,18 +18,6 @@ deleteAccountRouter.post('/', authenticateToken, async (req, res) => {
         });
     }
 
-    res.clearCookie('hasRefreshToken', {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'lax'
-    });
-
-    res.clearCookie('refreshToken', {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax'
-    });
-
     await prisma.user.delete({
         where: { id: user.id }
     });

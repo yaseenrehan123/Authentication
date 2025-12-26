@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { Outlet } from 'react-router'
 import Navbar from '../features/navbar/Navbar'
 import useAutoAuth from '@/hooks/useAutoAuth'
 import { useAuthStore } from '@/stores/useAuthStore'
 import useFetchProfile from '@/hooks/useFetchProfile'
 import DeleteAccountConfirmation from '@/features/delete-account-popup/DeleteAccountConfirmation'
+import AppFallback from './AppFallback'
 
 const Layout = () => {
     useAutoAuth();

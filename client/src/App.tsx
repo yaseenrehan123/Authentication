@@ -3,16 +3,18 @@ import { createBrowserRouter, RouterProvider } from 'react-router'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AppFallback from './app/AppFallback';
 
+const query = new QueryClient();
+
+const Layout = lazy(() => import('./app/Layout'))
+const NotFoundPage = lazy(() => import("./app/NotFoundPage"))
+const SignupPage = lazy(() => import('./features/signup/SignupPage'));
+const LoginPage = lazy(() => import('./features/login/LoginPage'));
+const VerifyPage = lazy(() => import('./features/verify/VerifyPage'));
+const ProfilePage = lazy(() => import('./features/profile/ProfilePage'));
+const ForgotPasswordPage = lazy(() => import("./features/forgot-password/ForgotPasswordPage"));
+const ResetPasswordPage = lazy(() => import("./features/reset-password/ResetPasswordPage"));
+
 const App = () => {
-  const query = new QueryClient();
-  const Layout = lazy(() => import('./app/Layout'))
-  const NotFoundPage = lazy(() => import("./app/NotFoundPage"))
-  const SignupPage = lazy(() => import('./features/signup/SignupPage'));
-  const LoginPage = lazy(() => import('./features/login/LoginPage'));
-  const VerifyPage = lazy(() => import('./features/verify/VerifyPage'));
-  const ProfilePage = lazy(() => import('./features/profile/ProfilePage'));
-  const ForgotPasswordPage = lazy(() => import("./features/forgot-password/ForgotPasswordPage"));
-  const ResetPasswordPage = lazy(() => import("./features/reset-password/ResetPasswordPage"));
 
   const router = createBrowserRouter([
     {

@@ -7,7 +7,7 @@ import Button from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import type { DeleteAccountConfirmationFields } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { deleteAccountConfirmationSchema } from '@/lib/validations';
+import deleteAccountConfirmationSchema from '@/validations/deleteAccountConfirmationSchema';
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore } from '@/stores/useAuthStore';
 import useRefreshAccessToken from '@/hooks/useRefreshAccessToken';

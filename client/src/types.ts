@@ -1,7 +1,15 @@
 import type { NavLinkProps as RouterNavlinkProps } from "react-router";
-import { loginSchema, editProfileSchema, signupSchema, verificationCodeSchema, verificationSchema, forgotPasswordSchema, verifyPasswordResetTokenSchema, resetPasswordFormSchema, resetPasswordSchema, deleteAccountConfirmationSchema } from "./lib/validations";
 import { z } from "zod";
-
+import signupSchema from "./validations/signupSchema";
+import loginSchema from "./validations/loginSchema";
+import verificationSchema from "./validations/verifcationSchema";
+import verificationCodeSchema from "./validations/verificationCodeSchema";
+import editProfileSchema from "./validations/editProfileSchema";
+import forgotPasswordSchema from "./validations/forgotPasswordSchema";
+import verifyPasswordResetTokenSchema from "./validations/verifyPasswordResetTokenSchema";
+import resetPasswordFormSchema from "./validations/resetPasswordFormSchema";
+import resetPasswordSchema from "./validations/resetPasswordSchema";
+import deleteAccountConfirmationSchema from "./validations/deleteAccountConfirmationSchema";
 //GENERAL
 export type JwtPayload = {
     exp: number

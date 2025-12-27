@@ -14,7 +14,7 @@ import useRefreshAccessToken from '@/hooks/useRefreshAccessToken';
 import { FormProvider, useForm } from 'react-hook-form';
 import type { EditProfileFormFields } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { editProfileSchema } from '@/lib/validations';
+import editProfileSchema from '@/validations/editProfileSchema';
 import Message from '@/components/ui/message';
 const ProfileDetails = () => {
     const accessToken = useAuthStore((state) => state.accessToken);

@@ -13,7 +13,6 @@ import NavCancelIcon from './NavCancelIcon';
 import SidebarOverlay from './SidebarOverlay';
 import { useNavigate } from 'react-router';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { useMutation } from '@tanstack/react-query';
 import { MdDelete } from "react-icons/md";
 import useDeleteAccountConfirmationStore from '@/stores/useDeleteAccountConfirmationStore';
 import useLogout from '@/hooks/useLogout';

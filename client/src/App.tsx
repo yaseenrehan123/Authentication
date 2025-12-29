@@ -1,18 +1,21 @@
-import React from 'react'
-import Navbar from './features/navbar/Navbar'
+import { lazy, Suspense } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Layout from './app/Layout'
-import NotFoundPage from './app/NotFoundPage'
-import SignupPage from './features/signup/SignupPage'
-import LoginPage from './features/login/LoginPage';
-import VerifyPage from './features/verify/VerifyPage';
-import ProfilePage from './features/profile/ProfilePage';
-import ForgotPasswordPage from './features/forgot-password/ForgotPasswordPage';
-import ResetPasswordPage from './features/reset-password/ResetPasswordPage';
+import AppFallback from './app/AppFallback';
+
+const query = new QueryClient();
+
+const Layout = lazy(() => import('./app/Layout'))
+const NotFoundPage = lazy(() => import("./app/NotFoundPage"))
+const SignupPage = lazy(() => import('./features/signup/SignupPage'));
+const LoginPage = lazy(() => import('./features/login/LoginPage'));
+const VerifyPage = lazy(() => import('./features/verify/VerifyPage'));
+const ProfilePage = lazy(() => import('./features/profile/ProfilePage'));
+const ForgotPasswordPage = lazy(() => import("./features/forgot-password/ForgotPasswordPage"));
+const ResetPasswordPage = lazy(() => import("./features/reset-password/ResetPasswordPage"));
 
 const App = () => {
-  const query = new QueryClient();
+
   const router = createBrowserRouter([
     {
       path: '/',
@@ -30,7 +33,9 @@ const App = () => {
   ])
   return (
     <QueryClientProvider client={query}>
-      <RouterProvider router={router}></RouterProvider>
+      <Suspense fallback={<AppFallback />}>
+        <RouterProvider router={router}></RouterProvider>
+      </Suspense>
     </QueryClientProvider>
 
   )

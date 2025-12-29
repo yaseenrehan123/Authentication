@@ -7,7 +7,7 @@ import Button from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import type { DeleteAccountConfirmationFields } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { deleteAccountConfirmationSchema } from '@/lib/validations';
+import deleteAccountConfirmationSchema from '@/validations/deleteAccountConfirmationSchema';
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore } from '@/stores/useAuthStore';
 import useRefreshAccessToken from '@/hooks/useRefreshAccessToken';
@@ -17,7 +17,6 @@ const DeleteAccountConfirmation = () => {
     const [confirmed, setConfirmed] = useState<boolean>(false);
     const [message, setMessage] = useState<string>('');
 
-    const enabled = useDeleteAccountConfirmationStore((state) => state.enabled);
     const setEnabled = useDeleteAccountConfirmationStore((state) => state.setEnabled);
     const username = useProfileStore((state) => state.username);
     const accessToken = useAuthStore((state) => state.accessToken);
@@ -81,9 +80,6 @@ const DeleteAccountConfirmation = () => {
         setConfirmed(confirmationValue === username);
     }, [confirmationValue]);
 
-    if (!enabled) {
-        return <div></div>
-    }
     return (
         <div className='fixed w-[clamp(20rem,80vw,40rem)] h-[clamp(10rem,50vh,30rem)] bg-black rounded-[8px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform
         outline-2 outline-gray-500 flex flex-col items-center gap-4 font-roboto p-4 z-30'>

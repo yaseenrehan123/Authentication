@@ -5,7 +5,7 @@ import type { SignupFormFields } from '@/types';
 import React, { useState } from 'react'
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signupSchema } from '@/lib/validations';
+import signupSchema from '@/validations/signupSchema';
 import { useMutation } from '@tanstack/react-query';
 import FormContainer from '@/components/ui/formContainer';
 import Alignment from '@/components/ui/alignment';
